@@ -1,0 +1,38 @@
+# ========================================
+# DEVOIR 2 - RAG (Retrieval-Augmented Generation) System
+# ========================================
+# Requirements for embedding models, vector search, and LLM integration.
+
+# Core utilities
+pandas>=2.1.0
+numpy>=1.26.0
+
+# Text Processing
+nltk>=3.8.0
+unicodedata2>=15.0.0
+
+# Embeddings & Vector Search
+sentence-transformers>=2.7.0
+faiss-cpu>=1.7.4
+transformers>=4.40.0
+
+# Large Language Models & External APIs
+torch>=2.2.0
+groq>=0.9.0
+huggingface-hub>=0.23.0
+
+# Machine Learning
+scikit-learn>=1.4.0
+
+# UI & Visualization
+gradio>=4.36.0
+matplotlib>=3.8.0
+
+# Utilities
+tqdm>=4.66.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# IPython support
+ipython>=8.16.0
+jupyter>=1.0.0

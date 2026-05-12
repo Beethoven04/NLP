@@ -1,0 +1,19 @@
+# ========================================
+# DEVOIR 0 - Basic Arabic NLP Pipeline
+# ========================================
+# Requirements for text normalization, tokenization, and frequency analysis.
+
+# Core utilities
+pandas>=2.1.0
+numpy>=1.26.0
+
+# NLP & Text Processing
+nltk>=3.8.0
+unicodedata2>=15.0.0
+
+# Machine Learning & Text Vectorization
+scikit-learn>=1.4.0
+
+# IPython support
+ipython>=8.16.0
+jupyter>=1.0.0

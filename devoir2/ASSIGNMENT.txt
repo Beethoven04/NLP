@@ -1,0 +1,53 @@
+Devoir 2. Mise en place d'un système RAG pour l'exploitation
+de textes juridiques
+
+L'objectif de ce devoir est de concevoir et implémenter un système basé sur l'approche Retrieval-
+Augmented Generation (RAG) permettant de répondre à des questions en langage naturel à partir d'une
+base de données de textes juridiques. Ce travail s'inscrit dans la continuité du premier devoir de NLP, dans
+lequel vous avez extrait et structuré des lois à partir de documents officiels.
+
+Dans le devoir précédent, vous avez :
+• extrait des informations juridiques (articles de loi, titres, contenus)
+• structuré ces données dans un fichier CSV
+Dans ce devoir, vous allez exploiter cette base afin de construire un assistant intelligent capable de
+répondre à des questions juridiques, liée au code de la route.
+
+TRAVAIL DEMANDÉ :
+1. Préparation des données
+• Charger le fichier CSV produit précédemment (devoir 1)
+• Nettoyer et normaliser les données textuelles
+• Découper les textes en unités exploitables (chunks)
+2. Indexation et recherche (Retriever)
+• Générer des représentations vectorielles (embeddings) des textes
+• Stocker ces représentations dans une base vectorielle (ex : FAISS ou Chroma)
+• Implémenter un mécanisme de recherche des documents pertinents
+3. Intégration d'un modèle de langage (LLM)
+• Utiliser un modèle de génération de texte (mistral, qwen3, GPT)
+• Construire un prompt intégrant les documents récupérés
+4. Implémentation du pipeline RAG
+Le système devra suivre les étapes suivantes :
+1. Réception d'une question utilisateur
+2. Recherche des documents les plus pertinents
+3. Injection de ces documents dans le prompt
+4. Génération d'une réponse contextualisée
+5. Comparaison de 3 LLMs
+6. Évaluation des performances (precision, recall)
+7. Détection de questions hors domaine
+5. Interface utilisateur
+Développer une interface simple permettant d'interroger le système sous forme d'interface web simple.
+
+Résultats attendus
+Le système doit :
+• Identifier les documents pertinents
+• Générer une réponse claire et cohérente
+• Fournir des références aux articles utilisés
+
+À rendre :
+• Code source du projet (Kaggle)
+• Fichier CSV utilisé (éventuellement enrichi)
+• Démonstration du système (vidéo)
+• Rapport technique incluant :
+  o description de l'architecture RAG
+  o choix des outils et méthodes
+  o analyse des résultats
+  o limites et perspectives

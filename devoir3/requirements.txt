@@ -1,0 +1,50 @@
+# ========================================
+# DEVOIR 3 - Advanced RAG with Knowledge Graphs
+# ========================================
+# Requirements for multi-modal retrieval, cross-encoders, metrics, and graph visualization.
+
+# Core utilities
+pandas>=2.1.0
+numpy>=1.26.0
+
+# NLP & Text Processing
+nltk>=3.8.0
+unicodedata2>=15.0.0
+re-ul>=0.5.0
+
+# Embeddings & Encoders
+sentence-transformers>=2.7.0
+transformers>=4.40.0
+
+# Vector Search & Sparse Retrieval
+faiss-cpu>=1.7.4
+rank-bm25>=0.2.2
+
+# Large Language Models (Apple Silicon optimized)
+torch>=2.2.0
+mlx>=0.16.0
+mlx-lm>=0.15.0
+
+# Evaluation Metrics
+rouge-score>=0.1.2
+bert-score>=0.3.13
+
+# Machine Learning
+scikit-learn>=1.4.0
+
+# Graph & Network Analysis
+networkx>=3.2.0
+
+# Visualization
+matplotlib>=3.8.0
+gradio>=4.36.0
+
+# Utilities
+tqdm>=4.66.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# IPython support
+ipython>=8.16.0
+jupyter>=1.0.0
+jupyterlab>=4.0.0

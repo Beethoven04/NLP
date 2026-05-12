@@ -1,0 +1,3003 @@
+[
+  {
+    "id": 1000001,
+    "description": "Detect SYN port scan targeting any host (half-open scan technique)",
+    "snort_rule": "alert tcp any any -> $HOME_NET any (msg:\"ET SCAN SYN Port Scan\"; flags:S,12; threshold:type both,track by_src,count 15,seconds 2; classtype:attempted-recon; sid:1000001; rev:1;)",
+    "attack_type": "syn_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "SYN",
+      "scan",
+      "reconnaissance",
+      "half-open"
+    ],
+    "reference": "CVE-general"
+  },
+  {
+    "id": 1000002,
+    "description": "Detect NULL scan: TCP packet with no flags set targeting internal network",
+    "snort_rule": "alert tcp any any -> $HOME_NET any (msg:\"ET SCAN NULL Scan\"; flags:0; classtype:attempted-recon; sid:1000002; rev:1;)",
+    "attack_type": "null_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "NULL",
+      "flags",
+      "scan",
+      "stealth"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000003,
+    "description": "Detect FIN scan: TCP packet with only FIN flag used for stealth reconnaissance",
+    "snort_rule": "alert tcp any any -> $HOME_NET any (msg:\"ET SCAN FIN Scan\"; flags:F,12; classtype:attempted-recon; sid:1000003; rev:1;)",
+    "attack_type": "fin_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "FIN",
+      "stealth",
+      "scan"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000004,
+    "description": "Detect Xmas tree scan: TCP packet with FIN, PSH, URG flags set simultaneously",
+    "snort_rule": "alert tcp any any -> $HOME_NET any (msg:\"ET SCAN Xmas Tree Scan\"; flags:FPU,12; classtype:attempted-recon; sid:1000004; rev:1;)",
+    "attack_type": "xmas_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "Xmas",
+      "FIN",
+      "PSH",
+      "URG",
+      "scan"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000005,
+    "description": "Detect UDP port scan on common service ports from external source",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET SCAN UDP Port Scan\"; threshold:type both,track by_src,count 20,seconds 5; classtype:attempted-recon; sid:1000005; rev:1;)",
+    "attack_type": "udp_scan",
+    "attack_family": "port_scanning",
+    "protocol": "udp",
+    "keywords": [
+      "UDP",
+      "scan",
+      "service discovery"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000006,
+    "description": "Detect ACK scan used to map firewall rules",
+    "snort_rule": "alert tcp any any -> $HOME_NET any (msg:\"ET SCAN ACK Scan Detected\"; flags:A,12; threshold:type both,track by_src,count 10,seconds 2; classtype:attempted-recon; sid:1000006; rev:1;)",
+    "attack_type": "ack_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "ACK",
+      "firewall",
+      "mapping",
+      "scan"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000007,
+    "description": "Detect Nmap OS fingerprinting attempt using unusual TCP flags",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET SCAN Nmap OS Fingerprint Attempt\"; flags:SFPU; classtype:attempted-recon; sid:1000007; rev:1;)",
+    "attack_type": "os_fingerprint",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "Nmap",
+      "OS",
+      "fingerprint",
+      "SFP"
+    ],
+    "reference": "CVE-nmap"
+  },
+  {
+    "id": 1000008,
+    "description": "Detect rapid port scan: more than 30 connections to different ports in 5 seconds",
+    "snort_rule": "alert tcp any any -> $HOME_NET any (msg:\"ET SCAN Rapid Port Scan\"; threshold:type both,track by_src,count 30,seconds 5; classtype:attempted-recon; sid:1000008; rev:1;)",
+    "attack_type": "rapid_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "rapid",
+      "sweep",
+      "threshold"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000009,
+    "description": "Detect ICMP host sweep: ping scan across multiple hosts",
+    "snort_rule": "alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET SCAN ICMP Host Sweep\"; itype:8; threshold:type both,track by_src,count 10,seconds 3; classtype:attempted-recon; sid:1000009; rev:1;)",
+    "attack_type": "icmp_sweep",
+    "attack_family": "port_scanning",
+    "protocol": "icmp",
+    "keywords": [
+      "ICMP",
+      "ping",
+      "sweep",
+      "host discovery"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000010,
+    "description": "Detect MAIMON scan: FIN+ACK flag combination",
+    "snort_rule": "alert tcp any any -> $HOME_NET any (msg:\"ET SCAN MAIMON Scan\"; flags:FA,12; classtype:attempted-recon; sid:1000010; rev:1;)",
+    "attack_type": "maimon_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "MAIMON",
+      "FIN",
+      "ACK",
+      "BSD"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000011,
+    "description": "Detect service version detection by Nmap using specific probe payloads",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET SCAN Nmap Service Version Detection\"; content:\"Nmap\"; nocase; classtype:attempted-recon; sid:1000011; rev:1;)",
+    "attack_type": "version_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "Nmap",
+      "version",
+      "probe"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000012,
+    "description": "Detect SCTP INIT scan targeting internal network ports",
+    "snort_rule": "alert sctp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET SCAN SCTP INIT Scan\"; classtype:attempted-recon; sid:1000012; rev:1;)",
+    "attack_type": "sctp_scan",
+    "attack_family": "port_scanning",
+    "protocol": "sctp",
+    "keywords": [
+      "SCTP",
+      "INIT",
+      "scan"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000013,
+    "description": "Detect excessive connection attempts indicating automated scanning tool",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET SCAN Automated Scanner Detected\"; threshold:type both,track by_src,count 100,seconds 10; classtype:attempted-recon; sid:1000013; rev:1;)",
+    "attack_type": "auto_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "automated",
+      "scanner",
+      "mass"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000014,
+    "description": "Detect TCP Window scan using zero window size probes",
+    "snort_rule": "alert tcp any any -> $HOME_NET any (msg:\"ET SCAN TCP Window Scan\"; flags:A,12; window:0; classtype:attempted-recon; sid:1000014; rev:1;)",
+    "attack_type": "window_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "window",
+      "zero",
+      "probe"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000015,
+    "description": "Detect scan of well-known administrative ports SSH, Telnet, RDP",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET [22,23,3389] (msg:\"ET SCAN Admin Port Scan\"; flags:S,12; threshold:type both,track by_src,count 5,seconds 10; classtype:attempted-recon; sid:1000015; rev:1;)",
+    "attack_type": "admin_port_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "SSH",
+      "Telnet",
+      "RDP",
+      "admin",
+      "port"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000016,
+    "description": "Detect slow stealth scan with low rate to evade detection",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET SCAN Slow Stealth Scan\"; flags:S,12; threshold:type both,track by_src,count 5,seconds 60; classtype:attempted-recon; sid:1000016; rev:1;)",
+    "attack_type": "slow_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "slow",
+      "stealth",
+      "evasion",
+      "low-rate"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000017,
+    "description": "Detect scanning of database ports MySQL, MSSQL, PostgreSQL, Oracle",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET [1433,1521,3306,5432] (msg:\"ET SCAN Database Port Scan\"; flags:S,12; classtype:attempted-recon; sid:1000017; rev:1;)",
+    "attack_type": "db_port_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "database",
+      "MySQL",
+      "MSSQL",
+      "PostgreSQL"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000018,
+    "description": "Detect scanning of IoT and industrial control system ports",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET [102,502,4840,47808] (msg:\"ET SCAN ICS Port Scan\"; flags:S,12; classtype:attempted-recon; sid:1000018; rev:1;)",
+    "attack_type": "ics_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "ICS",
+      "SCADA",
+      "IoT",
+      "Modbus"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000019,
+    "description": "Detect ping of death: ICMP packet with size exceeding 65535 bytes",
+    "snort_rule": "alert icmp any any -> $HOME_NET any (msg:\"ET SCAN Ping of Death\"; dsize:>65000; itype:8; classtype:attempted-dos; sid:1000019; rev:1;)",
+    "attack_type": "ping_of_death",
+    "attack_family": "port_scanning",
+    "protocol": "icmp",
+    "keywords": [
+      "ping",
+      "death",
+      "oversized",
+      "ICMP"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000020,
+    "description": "Detect port scan targeting web application ports 80 443 8080 8443",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET [80,443,8080,8443] (msg:\"ET SCAN Web Port Scan\"; flags:S,12; threshold:type both,track by_src,count 20,seconds 5; classtype:attempted-recon; sid:1000020; rev:1;)",
+    "attack_type": "web_port_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "HTTP",
+      "HTTPS",
+      "web",
+      "port scan"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000021,
+    "description": "Detect VoIP port scan targeting SIP and RTP ports",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET [5060,5061] (msg:\"ET SCAN VoIP SIP Scan\"; content:\"OPTIONS sip\"; nocase; classtype:attempted-recon; sid:1000021; rev:1;)",
+    "attack_type": "voip_scan",
+    "attack_family": "port_scanning",
+    "protocol": "udp",
+    "keywords": [
+      "VoIP",
+      "SIP",
+      "RTP",
+      "scan"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000022,
+    "description": "Detect SMB port scanning targeting Windows file sharing services",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 445 (msg:\"ET SCAN SMB Port Scan\"; flags:S,12; threshold:type both,track by_src,count 5,seconds 10; classtype:attempted-recon; sid:1000022; rev:1;)",
+    "attack_type": "smb_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "SMB",
+      "Windows",
+      "file sharing",
+      "445"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000023,
+    "description": "Detect DNS zone transfer attempt used for network reconnaissance",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 53 (msg:\"ET SCAN DNS Zone Transfer\"; content:\"|00 00 FC|\"; offset:14; classtype:attempted-recon; sid:1000023; rev:1;)",
+    "attack_type": "dns_zone_transfer",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "DNS",
+      "zone transfer",
+      "AXFR",
+      "reconnaissance"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000024,
+    "description": "Detect SNMP scan using default community string public",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 161 (msg:\"ET SCAN SNMP Public Community String\"; content:\"public\"; nocase; classtype:attempted-recon; sid:1000024; rev:1;)",
+    "attack_type": "snmp_scan",
+    "attack_family": "port_scanning",
+    "protocol": "udp",
+    "keywords": [
+      "SNMP",
+      "community",
+      "public",
+      "MIB"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000025,
+    "description": "Detect SSH banner grabbing attempt",
+    "snort_rule": "alert tcp $HOME_NET 22 -> $EXTERNAL_NET any (msg:\"ET SCAN SSH Banner Grabbing\"; content:\"SSH-\"; depth:4; classtype:attempted-recon; sid:1000025; rev:1;)",
+    "attack_type": "banner_grab",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "SSH",
+      "banner",
+      "grabbing",
+      "version"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000026,
+    "description": "Detect scanning for open proxy servers on common proxy ports",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET [3128,8080,8118,8888] (msg:\"ET SCAN Open Proxy Detection\"; content:\"CONNECT\"; classtype:attempted-recon; sid:1000026; rev:1;)",
+    "attack_type": "proxy_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "proxy",
+      "CONNECT",
+      "8080",
+      "3128"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000027,
+    "description": "Detect IP protocol scan testing different IP protocol numbers",
+    "snort_rule": "alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET SCAN IP Protocol Scan\"; ip_proto:!6; ip_proto:!17; ip_proto:!1; classtype:attempted-recon; sid:1000027; rev:1;)",
+    "attack_type": "ip_proto_scan",
+    "attack_family": "port_scanning",
+    "protocol": "ip",
+    "keywords": [
+      "IP",
+      "protocol",
+      "scan"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000028,
+    "description": "Detect scanning of mail server ports SMTP POP3 IMAP",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET [25,110,143,465,993,995] (msg:\"ET SCAN Mail Port Scan\"; flags:S,12; threshold:type both,track by_src,count 5,seconds 10; classtype:attempted-recon; sid:1000028; rev:1;)",
+    "attack_type": "mail_port_scan",
+    "attack_family": "port_scanning",
+    "protocol": "tcp",
+    "keywords": [
+      "SMTP",
+      "POP3",
+      "IMAP",
+      "mail"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000029,
+    "description": "Detect SYN flood attack against any server: high rate of SYN packets",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET DOS SYN Flood Attack\"; flags:S,12; threshold:type both,track by_src,count 100,seconds 1; classtype:attempted-dos; sid:1000029; rev:1;)",
+    "attack_type": "syn_flood",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "SYN",
+      "flood",
+      "DoS",
+      "rate"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000030,
+    "description": "Detect UDP flood attack: massive UDP datagrams to overwhelm target",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET DOS UDP Flood\"; threshold:type both,track by_src,count 1000,seconds 1; classtype:attempted-dos; sid:1000030; rev:1;)",
+    "attack_type": "udp_flood",
+    "attack_family": "dos_ddos",
+    "protocol": "udp",
+    "keywords": [
+      "UDP",
+      "flood",
+      "bandwidth",
+      "DDoS"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000031,
+    "description": "Detect ICMP flood: high rate of ICMP echo requests causing resource exhaustion",
+    "snort_rule": "alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET DOS ICMP Flood\"; itype:8; threshold:type both,track by_src,count 100,seconds 1; classtype:attempted-dos; sid:1000031; rev:1;)",
+    "attack_type": "icmp_flood",
+    "attack_family": "dos_ddos",
+    "protocol": "icmp",
+    "keywords": [
+      "ICMP",
+      "flood",
+      "echo",
+      "ping"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000032,
+    "description": "Detect Smurf attack: ICMP broadcast amplification",
+    "snort_rule": "alert icmp $EXTERNAL_NET any -> 255.255.255.255 any (msg:\"ET DOS Smurf Attack\"; itype:8; classtype:attempted-dos; sid:1000032; rev:1;)",
+    "attack_type": "smurf",
+    "attack_family": "dos_ddos",
+    "protocol": "icmp",
+    "keywords": [
+      "Smurf",
+      "broadcast",
+      "amplification",
+      "ICMP"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000033,
+    "description": "Detect HTTP flood attack: excessive GET requests to web server",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET DOS HTTP GET Flood\"; content:\"GET\"; http_method; threshold:type both,track by_src,count 200,seconds 10; classtype:attempted-dos; sid:1000033; rev:1;)",
+    "attack_type": "http_flood",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "HTTP",
+      "GET",
+      "flood",
+      "web",
+      "application"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000034,
+    "description": "Detect Slowloris attack: slow HTTP headers keeping connections open",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET DOS Slowloris Attack\"; content:\"X-a|3A|\"; http_header; pcre:\"/X-a:\\s*\\d+/Hi\"; classtype:attempted-dos; sid:1000034; rev:1;)",
+    "attack_type": "slowloris",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "Slowloris",
+      "slow",
+      "HTTP",
+      "connection exhaustion"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000035,
+    "description": "Detect DNS amplification attack using ANY query type",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 53 (msg:\"ET DOS DNS Amplification Attack\"; content:\"|00 FF|\"; offset:14; classtype:attempted-dos; sid:1000035; rev:1;)",
+    "attack_type": "dns_amplification",
+    "attack_family": "dos_ddos",
+    "protocol": "udp",
+    "keywords": [
+      "DNS",
+      "amplification",
+      "ANY",
+      "DDoS"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000036,
+    "description": "Detect NTP amplification using MONLIST command",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 123 (msg:\"ET DOS NTP Amplification MONLIST\"; content:\"|17 00 03 2a|\"; depth:4; classtype:attempted-dos; sid:1000036; rev:1;)",
+    "attack_type": "ntp_amplification",
+    "attack_family": "dos_ddos",
+    "protocol": "udp",
+    "keywords": [
+      "NTP",
+      "MONLIST",
+      "amplification",
+      "DDoS"
+    ],
+    "reference": "CVE-2013-5211"
+  },
+  {
+    "id": 1000037,
+    "description": "Detect RUDY attack: slow POST body keeping server connections busy",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET DOS RUDY Slow POST Attack\"; content:\"POST\"; http_method; content:\"Content-Length|3A|\"; http_header; classtype:attempted-dos; sid:1000037; rev:1;)",
+    "attack_type": "rudy",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "RUDY",
+      "slow POST",
+      "connection",
+      "DoS"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000038,
+    "description": "Detect TCP RST flood to disrupt established connections",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET DOS TCP RST Flood\"; flags:R,12; threshold:type both,track by_src,count 100,seconds 1; classtype:attempted-dos; sid:1000038; rev:1;)",
+    "attack_type": "rst_flood",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "RST",
+      "flood",
+      "connection",
+      "disruption"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000039,
+    "description": "Detect LAND attack: packet with same source and destination IP",
+    "snort_rule": "alert ip $HOME_NET any -> $HOME_NET any (msg:\"ET DOS LAND Attack\"; sameip; classtype:attempted-dos; sid:1000039; rev:1;)",
+    "attack_type": "land_attack",
+    "attack_family": "dos_ddos",
+    "protocol": "ip",
+    "keywords": [
+      "LAND",
+      "same IP",
+      "loopback",
+      "DoS"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000040,
+    "description": "Detect Teardrop attack: overlapping IP fragments causing system crash",
+    "snort_rule": "alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET DOS Teardrop Fragment Attack\"; fragbits:M+D; dsize:<9; classtype:attempted-dos; sid:1000040; rev:1;)",
+    "attack_type": "teardrop",
+    "attack_family": "dos_ddos",
+    "protocol": "ip",
+    "keywords": [
+      "Teardrop",
+      "fragment",
+      "overlap",
+      "crash"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000041,
+    "description": "Detect CHARGEN amplification DDoS using UDP port 19",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 19 (msg:\"ET DOS CHARGEN Amplification\"; threshold:type both,track by_src,count 10,seconds 1; classtype:attempted-dos; sid:1000041; rev:1;)",
+    "attack_type": "chargen",
+    "attack_family": "dos_ddos",
+    "protocol": "udp",
+    "keywords": [
+      "CHARGEN",
+      "amplification",
+      "port 19"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000042,
+    "description": "Detect Memcached amplification attack exploiting UDP port 11211",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 11211 (msg:\"ET DOS Memcached Amplification\"; content:\"|00 01 00 00 00 01|\"; depth:6; classtype:attempted-dos; sid:1000042; rev:1;)",
+    "attack_type": "memcached_amp",
+    "attack_family": "dos_ddos",
+    "protocol": "udp",
+    "keywords": [
+      "Memcached",
+      "amplification",
+      "DDoS",
+      "11211"
+    ],
+    "reference": "CVE-2018-1000115"
+  },
+  {
+    "id": 1000043,
+    "description": "Detect CLDAP amplification attack using UDP port 389",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 389 (msg:\"ET DOS CLDAP Amplification\"; threshold:type both,track by_src,count 50,seconds 1; classtype:attempted-dos; sid:1000043; rev:1;)",
+    "attack_type": "cldap",
+    "attack_family": "dos_ddos",
+    "protocol": "udp",
+    "keywords": [
+      "CLDAP",
+      "LDAP",
+      "amplification",
+      "DDoS"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000044,
+    "description": "Detect SYN-ACK reflection DDoS using spoofed SYN packets",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET DOS SYN-ACK Reflection\"; flags:SA,12; threshold:type both,track by_dst,count 500,seconds 5; classtype:attempted-dos; sid:1000044; rev:1;)",
+    "attack_type": "syn_ack_reflection",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "SYN-ACK",
+      "reflection",
+      "spoofed",
+      "DDoS"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000045,
+    "description": "Detect TCP connection table exhaustion: half-open connections",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET DOS TCP Connection Exhaustion\"; flags:S,12; threshold:type both,track by_dst,count 500,seconds 10; classtype:attempted-dos; sid:1000045; rev:1;)",
+    "attack_type": "conn_exhaustion",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "connection",
+      "exhaustion",
+      "half-open",
+      "resource"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000046,
+    "description": "Detect SSL/TLS renegotiation DoS attack",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 443 (msg:\"ET DOS SSL Renegotiation Attack\"; content:\"|16 03|\"; depth:2; threshold:type both,track by_src,count 20,seconds 5; classtype:attempted-dos; sid:1000046; rev:1;)",
+    "attack_type": "ssl_renegotiation",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "SSL",
+      "TLS",
+      "renegotiation",
+      "DoS"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000047,
+    "description": "Detect application layer DDoS targeting login endpoint",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET DOS Login Endpoint Flood\"; content:\"POST\"; http_method; content:\"/login\"; http_uri; threshold:type both,track by_src,count 50,seconds 10; classtype:attempted-dos; sid:1000047; rev:1;)",
+    "attack_type": "login_flood",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "login",
+      "flood",
+      "application",
+      "POST"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000048,
+    "description": "Detect WordPress XML-RPC pingback DDoS amplification",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET DOS WordPress XMLRPC Pingback DoS\"; content:\"POST\"; http_method; content:\"/xmlrpc.php\"; http_uri; classtype:attempted-dos; sid:1000048; rev:1;)",
+    "attack_type": "xmlrpc_dos",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "WordPress",
+      "XMLRPC",
+      "pingback",
+      "amplification"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000049,
+    "description": "Detect QUIC protocol flood against UDP port 443",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 443 (msg:\"ET DOS QUIC Flood\"; threshold:type both,track by_src,count 500,seconds 1; classtype:attempted-dos; sid:1000049; rev:1;)",
+    "attack_type": "quic_flood",
+    "attack_family": "dos_ddos",
+    "protocol": "udp",
+    "keywords": [
+      "QUIC",
+      "UDP",
+      "443",
+      "flood"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000050,
+    "description": "Detect Fraggle attack: UDP echo and chargen amplification",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET [7,19] (msg:\"ET DOS Fraggle Attack\"; threshold:type both,track by_src,count 20,seconds 1; classtype:attempted-dos; sid:1000050; rev:1;)",
+    "attack_type": "fraggle",
+    "attack_family": "dos_ddos",
+    "protocol": "udp",
+    "keywords": [
+      "Fraggle",
+      "UDP",
+      "echo",
+      "chargen"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000051,
+    "description": "Detect IP fragment flood overwhelming reassembly buffer",
+    "snort_rule": "alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET DOS IP Fragment Flood\"; fragbits:M; threshold:type both,track by_src,count 200,seconds 1; classtype:attempted-dos; sid:1000051; rev:1;)",
+    "attack_type": "fragment_flood",
+    "attack_family": "dos_ddos",
+    "protocol": "ip",
+    "keywords": [
+      "fragment",
+      "flood",
+      "reassembly",
+      "buffer"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000052,
+    "description": "Detect RDP DoS via malformed client hello packets",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 3389 (msg:\"ET DOS RDP Malformed Packet DoS\"; content:\"|03 00|\"; depth:2; threshold:type both,track by_src,count 50,seconds 10; classtype:attempted-dos; sid:1000052; rev:1;)",
+    "attack_type": "rdp_dos",
+    "attack_family": "dos_ddos",
+    "protocol": "tcp",
+    "keywords": [
+      "RDP",
+      "DoS",
+      "malformed",
+      "3389"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000053,
+    "description": "Detect volumetric attack via large UDP packets to random ports",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET DOS UDP Volumetric Attack\"; dsize:>1400; threshold:type both,track by_src,count 100,seconds 1; classtype:attempted-dos; sid:1000053; rev:1;)",
+    "attack_type": "volumetric",
+    "attack_family": "dos_ddos",
+    "protocol": "udp",
+    "keywords": [
+      "volumetric",
+      "large packet",
+      "bandwidth",
+      "saturation"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000054,
+    "description": "Detect SQL injection attempt using UNION SELECT statement in HTTP URI",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB SQL Injection UNION SELECT\"; content:\"UNION\"; http_uri; content:\"SELECT\"; http_uri; nocase; classtype:web-application-attack; sid:1000054; rev:1;)",
+    "attack_type": "sql_injection",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "SQL",
+      "UNION",
+      "SELECT",
+      "injection"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000055,
+    "description": "Detect SQL injection via OR 1=1 authentication bypass attempt",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB SQL Injection OR 1=1\"; content:\"or+1%3D1\"; http_uri; nocase; classtype:web-application-attack; sid:1000055; rev:1;)",
+    "attack_type": "sql_auth_bypass",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "SQL",
+      "OR",
+      "1=1",
+      "authentication bypass"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000056,
+    "description": "Detect blind SQL injection using time-based SLEEP function",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Blind SQL Injection SLEEP\"; content:\"SLEEP(\"; http_uri; nocase; pcre:\"/SLEEP\\(\\d+\\)/Ui\"; classtype:web-application-attack; sid:1000056; rev:1;)",
+    "attack_type": "blind_sqli",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "blind SQL",
+      "SLEEP",
+      "time-based",
+      "injection"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000057,
+    "description": "Detect reflected XSS attack with script tag in URI parameter",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB XSS Script Tag\"; content:\"<script\"; http_uri; nocase; classtype:web-application-attack; sid:1000057; rev:1;)",
+    "attack_type": "xss_reflected",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "XSS",
+      "script",
+      "cross-site",
+      "reflected"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000058,
+    "description": "Detect XSS attack using JavaScript event handlers in URI",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB XSS Event Handler\"; pcre:\"/on(load|error|click|mouseover)=/Ui\"; http_uri; classtype:web-application-attack; sid:1000058; rev:1;)",
+    "attack_type": "xss_event",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "XSS",
+      "onload",
+      "onclick",
+      "event handler"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000059,
+    "description": "Detect path traversal attack attempting to access etc/passwd",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Path Traversal etc passwd\"; content:\"../etc/passwd\"; http_uri; nocase; classtype:web-application-attack; sid:1000059; rev:1;)",
+    "attack_type": "path_traversal",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "path traversal",
+      "directory",
+      "etc/passwd",
+      "LFI"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000060,
+    "description": "Detect directory traversal using URL encoded sequences",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Directory Traversal Encoded\"; content:\"%2e%2e%2f\"; http_uri; nocase; classtype:web-application-attack; sid:1000060; rev:1;)",
+    "attack_type": "dir_traversal",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "traversal",
+      "encoded",
+      "..%2f",
+      "directory"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000061,
+    "description": "Detect remote file inclusion attack loading external PHP file",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Remote File Inclusion\"; pcre:\"/=http(s)?:\\/\\/[^\\/]+\\//Ui\"; http_uri; classtype:web-application-attack; sid:1000061; rev:1;)",
+    "attack_type": "rfi",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "RFI",
+      "remote file",
+      "inclusion",
+      "PHP"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000062,
+    "description": "Detect local file inclusion targeting sensitive configuration files",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB LFI Config File Access\"; pcre:\"/(boot\\.ini|win\\.ini|php\\.ini)/Ui\"; http_uri; classtype:web-application-attack; sid:1000062; rev:1;)",
+    "attack_type": "lfi",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "LFI",
+      "local file",
+      "config",
+      "inclusion"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000063,
+    "description": "Detect OS command injection via shell metacharacters in HTTP parameter",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Command Injection Shell Metachar\"; pcre:\"/[;&|`]\\s*(ls|cat|id|whoami|wget|curl)/Ui\"; http_uri; classtype:web-application-attack; sid:1000063; rev:1;)",
+    "attack_type": "cmd_injection",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "command injection",
+      "shell",
+      "metacharacter",
+      "RCE"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000064,
+    "description": "Detect SSRF attempt targeting internal cloud metadata endpoint",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB SSRF Cloud Metadata\"; content:\"169.254.169.254\"; http_uri; classtype:web-application-attack; sid:1000064; rev:1;)",
+    "attack_type": "ssrf",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "SSRF",
+      "metadata",
+      "AWS",
+      "169.254.169.254"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000065,
+    "description": "Detect XXE injection in XML POST body targeting internal resources",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB XXE Injection DOCTYPE\"; content:\"<!DOCTYPE\"; http_client_body; nocase; content:\"ENTITY\"; http_client_body; nocase; classtype:web-application-attack; sid:1000065; rev:1;)",
+    "attack_type": "xxe",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "XXE",
+      "XML",
+      "DOCTYPE",
+      "ENTITY",
+      "injection"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000066,
+    "description": "Detect insecure deserialization via Java serialized object in HTTP body",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Java Deserialization Attack\"; content:\"|AC ED 00 05|\"; http_client_body; classtype:web-application-attack; sid:1000066; rev:1;)",
+    "attack_type": "deserialization",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "deserialization",
+      "Java",
+      "serialized",
+      "object"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000067,
+    "description": "Detect HTTP parameter pollution attack with duplicate parameters",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB HTTP Parameter Pollution\"; pcre:\"/(\\w+)=[^&]+&\u0001=/Ui\"; http_uri; classtype:web-application-attack; sid:1000067; rev:1;)",
+    "attack_type": "hpp",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "HPP",
+      "parameter",
+      "pollution",
+      "duplicate"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000068,
+    "description": "Detect CRLF injection attempt for HTTP response splitting",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB CRLF Injection\"; content:\"%0d%0a\"; http_uri; nocase; classtype:web-application-attack; sid:1000068; rev:1;)",
+    "attack_type": "crlf",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "CRLF",
+      "response splitting",
+      "injection",
+      "header"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000069,
+    "description": "Detect web shell access PHP webshell in uploaded file",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB PHP Webshell Access\"; content:\"cmd=\"; http_uri; pcre:\"/\\.(php|phtml|php5)/Ui\"; http_uri; classtype:web-application-attack; sid:1000069; rev:1;)",
+    "attack_type": "webshell",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "webshell",
+      "PHP",
+      "cmd",
+      "backdoor"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000070,
+    "description": "Detect clickjacking attempt: page loaded without X-Frame-Options",
+    "snort_rule": "alert tcp $HOME_NET $HTTP_PORTS -> $EXTERNAL_NET any (msg:\"ET WEB Missing X-Frame-Options\"; content:\"200\"; http_stat_code; content:!\"X-Frame-Options\"; http_header; classtype:policy-violation; sid:1000070; rev:1;)",
+    "attack_type": "clickjacking",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "clickjacking",
+      "X-Frame-Options",
+      "iframe",
+      "header"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000071,
+    "description": "Detect IDOR attempt accessing other users resources via numeric ID",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB IDOR Sequential ID Access\"; pcre:\"/\\/(user|account|profile)\\/\\d+/Ui\"; http_uri; threshold:type both,track by_src,count 20,seconds 10; classtype:web-application-attack; sid:1000071; rev:1;)",
+    "attack_type": "idor",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "IDOR",
+      "authorization",
+      "access control",
+      "enumeration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000072,
+    "description": "Detect PHP code injection via eval in HTTP request body",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB PHP Code Injection eval\"; content:\"eval(\"; http_client_body; nocase; classtype:web-application-attack; sid:1000072; rev:1;)",
+    "attack_type": "php_injection",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "PHP",
+      "eval",
+      "code injection",
+      "RCE"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000073,
+    "description": "Detect Server Side Template Injection SSTI in Jinja2 or Twig",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB SSTI Template Injection\"; pcre:\"/({{.*}}|{%.*%})/Ui\"; http_uri; classtype:web-application-attack; sid:1000073; rev:1;)",
+    "attack_type": "ssti",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "SSTI",
+      "template injection",
+      "Jinja2",
+      "server-side"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000074,
+    "description": "Detect CSRF token bypass attempt in POST request",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB CSRF Token Missing\"; content:\"POST\"; http_method; content:!\"csrf_token\"; http_client_body; classtype:web-application-attack; sid:1000074; rev:1;)",
+    "attack_type": "csrf",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "CSRF",
+      "cross-site request forgery",
+      "token",
+      "POST"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000075,
+    "description": "Detect HTTP request smuggling with conflicting Content-Length and Transfer-Encoding",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB HTTP Request Smuggling\"; content:\"Content-Length|3A|\"; http_header; content:\"Transfer-Encoding|3A|\"; http_header; classtype:web-application-attack; sid:1000075; rev:1;)",
+    "attack_type": "request_smuggling",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "request smuggling",
+      "Content-Length",
+      "Transfer-Encoding",
+      "HTTP"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000076,
+    "description": "Detect Log4Shell exploitation via JNDI lookup in HTTP header",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Log4Shell JNDI Injection\"; content:\"${jndi|3A|\"; nocase; http_header; classtype:attempted-admin; sid:1000076; rev:1;)",
+    "attack_type": "log4shell",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "Log4Shell",
+      "JNDI",
+      "Log4j",
+      "CVE-2021-44228"
+    ],
+    "reference": "CVE-2021-44228"
+  },
+  {
+    "id": 1000077,
+    "description": "Detect Spring4Shell exploitation attempt via class.classLoader",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Spring4Shell RCE\"; content:\"class.classLoader\"; http_client_body; nocase; classtype:attempted-admin; sid:1000077; rev:1;)",
+    "attack_type": "spring4shell",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "Spring4Shell",
+      "Spring",
+      "classLoader",
+      "RCE"
+    ],
+    "reference": "CVE-2022-22965"
+  },
+  {
+    "id": 1000078,
+    "description": "Detect WordPress plugin exploit attempt via unauthorized file upload",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB WordPress Malicious Upload\"; content:\"POST\"; http_method; content:\"/wp-content/plugins/\"; http_uri; content:\"filename=\"; http_client_body; classtype:web-application-attack; sid:1000078; rev:1;)",
+    "attack_type": "wp_upload",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "WordPress",
+      "plugin",
+      "upload",
+      "exploit"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000079,
+    "description": "Detect GraphQL introspection abuse for schema enumeration",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB GraphQL Introspection Abuse\"; content:\"__schema\"; http_client_body; nocase; classtype:web-application-attack; sid:1000079; rev:1;)",
+    "attack_type": "graphql_introspection",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "GraphQL",
+      "introspection",
+      "schema",
+      "enumeration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000080,
+    "description": "Detect prototype pollution attack in JSON body",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Prototype Pollution\"; content:\"__proto__\"; http_client_body; nocase; classtype:web-application-attack; sid:1000080; rev:1;)",
+    "attack_type": "prototype_pollution",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "prototype pollution",
+      "__proto__",
+      "JavaScript",
+      "JSON"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000081,
+    "description": "Detect open redirect to external malicious domain",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Open Redirect External\"; pcre:\"/[?&](url|redirect|next|return)=https?:\\/\\/[^\\/]*\\./Ui\"; http_uri; classtype:web-application-attack; sid:1000081; rev:1;)",
+    "attack_type": "open_redirect",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "open redirect",
+      "URL",
+      "redirect",
+      "phishing"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000082,
+    "description": "Detect mass assignment attack exploiting auto-binding in frameworks",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Mass Assignment Attack\"; content:\"isAdmin\"; http_client_body; nocase; classtype:web-application-attack; sid:1000082; rev:1;)",
+    "attack_type": "mass_assignment",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "mass assignment",
+      "auto-binding",
+      "isAdmin",
+      "privilege"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000083,
+    "description": "Detect HTTP verb tampering to bypass access controls",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB HTTP Verb Tampering\"; pcre:\"/^(HEAD|TRACE|TRACK|OPTIONS|DEBUG)\\s/\"; http_method; classtype:web-application-attack; sid:1000083; rev:1;)",
+    "attack_type": "verb_tampering",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "verb tampering",
+      "TRACE",
+      "DEBUG",
+      "HTTP method"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000084,
+    "description": "Detect SQL injection in cookie header value",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB SQL Injection in Cookie\"; pcre:\"/Cookie.*['\"].*(\bOR\b|\bAND\b|UNION|SELECT)/Hi\"; classtype:web-application-attack; sid:1000084; rev:1;)",
+    "attack_type": "sqli_cookie",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "SQL injection",
+      "cookie",
+      "header",
+      "OR",
+      "AND"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000085,
+    "description": "Detect stored XSS via malicious SVG file upload",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB SVG XSS Upload\"; content:\"<svg\"; http_client_body; nocase; content:\"onload\"; http_client_body; nocase; classtype:web-application-attack; sid:1000085; rev:1;)",
+    "attack_type": "svg_xss",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "SVG",
+      "XSS",
+      "stored",
+      "upload"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000086,
+    "description": "Detect web scraping bot with no user agent header",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Missing User-Agent Bot\"; content:\"GET\"; http_method; content:!\"User-Agent|3A|\"; http_header; threshold:type both,track by_src,count 20,seconds 5; classtype:policy-violation; sid:1000086; rev:1;)",
+    "attack_type": "web_scraping",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "scraping",
+      "bot",
+      "user-agent",
+      "missing"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000087,
+    "description": "Detect Apache Struts RCE exploit via Content-Type header injection",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Apache Struts RCE Content-Type\"; content:\"Content-Type|3A|\"; http_header; content:\"%{\"; http_header; classtype:attempted-admin; sid:1000087; rev:1;)",
+    "attack_type": "struts_rce",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "Struts",
+      "RCE",
+      "Content-Type",
+      "OGNL"
+    ],
+    "reference": "CVE-2017-5638"
+  },
+  {
+    "id": 1000088,
+    "description": "Detect shellshock attack in HTTP User-Agent or Referer header",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET WEB Shellshock Bash RCE\"; pcre:\"/(\\(\\)\\s*{|\\(\\)\\s*{)/H\"; classtype:attempted-admin; sid:1000088; rev:1;)",
+    "attack_type": "shellshock",
+    "attack_family": "web_attack",
+    "protocol": "tcp",
+    "keywords": [
+      "Shellshock",
+      "Bash",
+      "function",
+      "RCE"
+    ],
+    "reference": "CVE-2014-6271"
+  },
+  {
+    "id": 1000089,
+    "description": "Detect SSH brute force: multiple failed authentication attempts from same source",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $SSH_SERVERS 22 (msg:\"ET BRUTE SSH Brute Force\"; content:\"SSH-\"; depth:4; threshold:type both,track by_src,count 5,seconds 60; classtype:attempted-admin; sid:1000089; rev:1;)",
+    "attack_type": "ssh_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "SSH",
+      "brute force",
+      "password",
+      "authentication"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000090,
+    "description": "Detect FTP brute force login attempts from external host",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $FTP_SERVERS 21 (msg:\"ET BRUTE FTP Brute Force\"; content:\"PASS \"; nocase; threshold:type both,track by_src,count 5,seconds 30; classtype:attempted-admin; sid:1000090; rev:1;)",
+    "attack_type": "ftp_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "FTP",
+      "brute force",
+      "PASS",
+      "login"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000091,
+    "description": "Detect RDP brute force on Windows Remote Desktop port 3389",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 3389 (msg:\"ET BRUTE RDP Brute Force\"; content:\"|03 00|\"; depth:2; threshold:type both,track by_src,count 5,seconds 60; classtype:attempted-admin; sid:1000091; rev:1;)",
+    "attack_type": "rdp_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "RDP",
+      "brute force",
+      "3389",
+      "Windows"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000092,
+    "description": "Detect HTTP basic authentication brute force via 401 responses",
+    "snort_rule": "alert tcp $HTTP_SERVERS $HTTP_PORTS -> $EXTERNAL_NET any (msg:\"ET BRUTE HTTP Basic Auth Brute Force\"; content:\"401\"; http_stat_code; threshold:type both,track by_dst,count 5,seconds 30; classtype:attempted-admin; sid:1000092; rev:1;)",
+    "attack_type": "http_basic_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "HTTP",
+      "basic auth",
+      "401",
+      "brute force"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000093,
+    "description": "Detect WordPress login brute force via POST to wp-login.php",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET BRUTE WordPress Login Brute Force\"; content:\"POST\"; http_method; content:\"/wp-login.php\"; http_uri; threshold:type both,track by_src,count 5,seconds 30; classtype:attempted-admin; sid:1000093; rev:1;)",
+    "attack_type": "wp_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "WordPress",
+      "wp-login",
+      "POST",
+      "brute force"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000094,
+    "description": "Detect SMTP authentication brute force with repeated AUTH commands",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $SMTP_SERVERS 25 (msg:\"ET BRUTE SMTP Auth Brute Force\"; content:\"AUTH\"; nocase; threshold:type both,track by_src,count 5,seconds 30; classtype:attempted-admin; sid:1000094; rev:1;)",
+    "attack_type": "smtp_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "SMTP",
+      "AUTH",
+      "brute force",
+      "email"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000095,
+    "description": "Detect MySQL brute force authentication attempts",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $DB_SERVERS 3306 (msg:\"ET BRUTE MySQL Brute Force\"; content:\"|00 00 00 0a|\"; depth:4; threshold:type both,track by_src,count 5,seconds 30; classtype:attempted-admin; sid:1000095; rev:1;)",
+    "attack_type": "mysql_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "MySQL",
+      "brute force",
+      "3306",
+      "database"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000096,
+    "description": "Detect Telnet brute force login attempts to network devices",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 23 (msg:\"ET BRUTE Telnet Brute Force\"; content:\"login|3A|\"; nocase; threshold:type both,track by_src,count 5,seconds 30; classtype:attempted-admin; sid:1000096; rev:1;)",
+    "attack_type": "telnet_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "Telnet",
+      "brute force",
+      "login",
+      "23"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000097,
+    "description": "Detect SNMP community string brute force enumeration",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 161 (msg:\"ET BRUTE SNMP Community Brute Force\"; threshold:type both,track by_src,count 20,seconds 10; classtype:attempted-admin; sid:1000097; rev:1;)",
+    "attack_type": "snmp_brute",
+    "attack_family": "brute_force",
+    "protocol": "udp",
+    "keywords": [
+      "SNMP",
+      "community string",
+      "brute force",
+      "161"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000098,
+    "description": "Detect VNC brute force on port 5900 from external source",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 5900 (msg:\"ET BRUTE VNC Brute Force\"; content:\"RFB \"; depth:4; threshold:type both,track by_src,count 5,seconds 30; classtype:attempted-admin; sid:1000098; rev:1;)",
+    "attack_type": "vnc_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "VNC",
+      "brute force",
+      "5900",
+      "RFB"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000099,
+    "description": "Detect LDAP brute force authentication attempts",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 389 (msg:\"ET BRUTE LDAP Brute Force\"; content:\"|60|\"; depth:1; threshold:type both,track by_src,count 10,seconds 30; classtype:attempted-admin; sid:1000099; rev:1;)",
+    "attack_type": "ldap_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "LDAP",
+      "brute force",
+      "389",
+      "directory"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000100,
+    "description": "Detect IMAP brute force email account password guessing",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:\"ET BRUTE IMAP Brute Force\"; content:\"LOGIN\"; nocase; threshold:type both,track by_src,count 5,seconds 30; classtype:attempted-admin; sid:1000100; rev:1;)",
+    "attack_type": "imap_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "IMAP",
+      "brute force",
+      "LOGIN",
+      "email"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000101,
+    "description": "Detect POP3 brute force against mail server",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 110 (msg:\"ET BRUTE POP3 Brute Force\"; content:\"PASS \"; nocase; threshold:type both,track by_src,count 5,seconds 30; classtype:attempted-admin; sid:1000101; rev:1;)",
+    "attack_type": "pop3_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "POP3",
+      "brute force",
+      "PASS",
+      "110"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000102,
+    "description": "Detect Oracle database brute force authentication",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $DB_SERVERS 1521 (msg:\"ET BRUTE Oracle DB Brute Force\"; threshold:type both,track by_src,count 5,seconds 30; classtype:attempted-admin; sid:1000102; rev:1;)",
+    "attack_type": "oracle_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "Oracle",
+      "brute force",
+      "1521",
+      "database"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000103,
+    "description": "Detect credential stuffing attack with many different username attempts",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET BRUTE Credential Stuffing Attack\"; content:\"POST\"; http_method; content:\"username=\"; http_client_body; threshold:type both,track by_src,count 30,seconds 60; classtype:attempted-admin; sid:1000103; rev:1;)",
+    "attack_type": "credential_stuffing",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "credential stuffing",
+      "username",
+      "POST",
+      "login"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000104,
+    "description": "Detect password spray attack: one password tried against many accounts",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 445 (msg:\"ET BRUTE SMB Password Spray\"; content:\"|ff|SMB|72|\"; depth:8; threshold:type both,track by_dst,count 20,seconds 60; classtype:attempted-admin; sid:1000104; rev:1;)",
+    "attack_type": "password_spray",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "password spray",
+      "SMB",
+      "accounts",
+      "445"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000105,
+    "description": "Detect Kubernetes API server brute force authentication",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 6443 (msg:\"ET BRUTE Kubernetes API Brute Force\"; content:\"Authorization|3A| Bearer\"; http_header; threshold:type both,track by_src,count 10,seconds 30; classtype:attempted-admin; sid:1000105; rev:1;)",
+    "attack_type": "k8s_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "Kubernetes",
+      "API",
+      "Bearer token",
+      "6443"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000106,
+    "description": "Detect Redis unauthorized access brute force on port 6379",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 6379 (msg:\"ET BRUTE Redis Auth Brute Force\"; content:\"AUTH \"; nocase; threshold:type both,track by_src,count 10,seconds 30; classtype:attempted-admin; sid:1000106; rev:1;)",
+    "attack_type": "redis_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "Redis",
+      "AUTH",
+      "brute force",
+      "6379"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000107,
+    "description": "Detect Elasticsearch HTTP API brute force authentication attempt",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 9200 (msg:\"ET BRUTE Elasticsearch Brute Force\"; content:\"Authorization|3A|\"; http_header; threshold:type both,track by_src,count 10,seconds 30; classtype:attempted-admin; sid:1000107; rev:1;)",
+    "attack_type": "elastic_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "Elasticsearch",
+      "brute force",
+      "9200",
+      "Authorization"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000108,
+    "description": "Detect CMS admin panel brute force on common paths",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET BRUTE CMS Admin Panel Brute\"; content:\"POST\"; http_method; pcre:\"/\\/(admin|administrator|backend|dashboard)/Ui\"; http_uri; threshold:type both,track by_src,count 5,seconds 30; classtype:attempted-admin; sid:1000108; rev:1;)",
+    "attack_type": "cms_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "CMS",
+      "admin",
+      "panel",
+      "brute force"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000109,
+    "description": "Detect API key brute force via sequential key testing",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET BRUTE API Key Brute Force\"; content:\"X-API-Key|3A|\"; http_header; threshold:type both,track by_src,count 20,seconds 10; classtype:attempted-admin; sid:1000109; rev:1;)",
+    "attack_type": "api_key_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "API",
+      "key",
+      "brute force",
+      "X-API-Key"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000110,
+    "description": "Detect JWT token brute force attempting signature bypass",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:\"ET BRUTE JWT Algorithm None Attack\"; content:\"alg|22 3A 22|none\"; http_header; nocase; classtype:attempted-admin; sid:1000110; rev:1;)",
+    "attack_type": "jwt_brute",
+    "attack_family": "brute_force",
+    "protocol": "tcp",
+    "keywords": [
+      "JWT",
+      "algorithm none",
+      "signature",
+      "bypass"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000111,
+    "description": "Detect IRC botnet command and control communication on non-standard port",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET MALWARE IRC Botnet C2\"; content:\"PRIVMSG\"; content:\"!cmd\"; within:30; classtype:trojan-activity; sid:1000111; rev:1;)",
+    "attack_type": "irc_botnet",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "IRC",
+      "botnet",
+      "C2",
+      "PRIVMSG",
+      "command"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000112,
+    "description": "Detect HTTP-based malware beacon with periodic check-in to C2 server",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET MALWARE HTTP C2 Beacon\"; content:\"GET\"; http_method; content:\"beacon\"; http_uri; nocase; classtype:trojan-activity; sid:1000112; rev:1;)",
+    "attack_type": "http_c2",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "HTTP",
+      "beacon",
+      "C2",
+      "malware",
+      "periodic"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000113,
+    "description": "Detect DNS tunneling: unusually long DNS query for data exfiltration",
+    "snort_rule": "alert udp $HOME_NET any -> any 53 (msg:\"ET MALWARE DNS Tunneling Long Query\"; content:\"|01 00 00 01|\"; offset:2; depth:4; dsize:>100; classtype:trojan-activity; sid:1000113; rev:1;)",
+    "attack_type": "dns_tunnel",
+    "attack_family": "malware_c2",
+    "protocol": "udp",
+    "keywords": [
+      "DNS",
+      "tunneling",
+      "exfiltration",
+      "long query"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000114,
+    "description": "Detect reverse shell connection using netcat or bash redirect",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET MALWARE Reverse Shell Netcat\"; content:\"/bin/sh\"; classtype:trojan-activity; sid:1000114; rev:1;)",
+    "attack_type": "reverse_shell",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "reverse shell",
+      "netcat",
+      "bash",
+      "/bin/sh"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000115,
+    "description": "Detect Cobalt Strike beacon HTTPS communication pattern",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 443 (msg:\"ET MALWARE Cobalt Strike HTTPS Beacon\"; content:\"|16 03|\"; depth:2; content:\"|00 00 00 00|\"; classtype:trojan-activity; sid:1000115; rev:1;)",
+    "attack_type": "cobalt_strike",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "Cobalt Strike",
+      "beacon",
+      "HTTPS",
+      "red team"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000116,
+    "description": "Detect Metasploit Meterpreter reverse TCP connection",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET MALWARE Meterpreter Reverse TCP\"; content:\"|fc e8 82 00 00 00|\"; depth:6; classtype:trojan-activity; sid:1000116; rev:1;)",
+    "attack_type": "meterpreter",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "Meterpreter",
+      "Metasploit",
+      "reverse TCP",
+      "shellcode"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000117,
+    "description": "Detect PowerShell Empire C2 communication via HTTP",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET MALWARE PowerShell Empire C2\"; content:\"GET\"; http_method; content:\"session=\"; http_cookie; content:\"hop.php\"; http_uri; classtype:trojan-activity; sid:1000117; rev:1;)",
+    "attack_type": "empire_c2",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "PowerShell",
+      "Empire",
+      "C2",
+      "session"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000118,
+    "description": "Detect ransomware file encryption activity via SMB mass file modification",
+    "snort_rule": "alert tcp $HOME_NET any -> $HOME_NET 445 (msg:\"ET MALWARE Ransomware SMB File Encryption\"; content:\"|ff|SMB|a2|\"; depth:8; threshold:type both,track by_src,count 100,seconds 10; classtype:trojan-activity; sid:1000118; rev:1;)",
+    "attack_type": "ransomware",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "ransomware",
+      "SMB",
+      "encryption",
+      "445"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000119,
+    "description": "Detect malware dropper downloading executable from remote server",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET MALWARE EXE Download Dropper\"; content:\"GET\"; http_method; content:\".exe\"; http_uri; nocase; content:\"MZ\"; http_server_body; depth:2; classtype:trojan-activity; sid:1000119; rev:1;)",
+    "attack_type": "dropper",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "dropper",
+      "EXE",
+      "download",
+      "MZ header"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000120,
+    "description": "Detect keylogger data exfiltration via HTTP POST",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET MALWARE Keylogger Data Exfil POST\"; content:\"POST\"; http_method; content:\"keylog=\"; http_client_body; nocase; classtype:trojan-activity; sid:1000120; rev:1;)",
+    "attack_type": "keylogger",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "keylogger",
+      "POST",
+      "exfiltration",
+      "credentials"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000121,
+    "description": "Detect cryptocurrency miner connecting to mining pool",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET MALWARE Crypto Miner Stratum\"; content:\"|7b 22 69 64 22|\"; depth:5; content:\"mining.subscribe\"; classtype:trojan-activity; sid:1000121; rev:1;)",
+    "attack_type": "cryptominer",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "cryptominer",
+      "Stratum",
+      "mining pool",
+      "cryptocurrency"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000122,
+    "description": "Detect malware using HTTPS to hide C2 traffic with self-signed certificate",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 443 (msg:\"ET MALWARE HTTPS Self-Signed C2\"; content:\"|55 04 03|\"; pcre:\"/U\u0004\u0003[\u0000-ÿ]{1,2}[C|c]2/\"; classtype:trojan-activity; sid:1000122; rev:1;)",
+    "attack_type": "https_c2",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "HTTPS",
+      "self-signed",
+      "C2",
+      "TLS"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000123,
+    "description": "Detect Emotet trojan C2 check-in via HTTP POST",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET MALWARE Emotet C2 Check-In\"; content:\"POST\"; http_method; pcre:\"/^\\/[a-z0-9]{8}$/Ui\"; http_uri; classtype:trojan-activity; sid:1000123; rev:1;)",
+    "attack_type": "emotet",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "Emotet",
+      "trojan",
+      "C2",
+      "POST"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000124,
+    "description": "Detect TrickBot banking trojan data collection POST",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET MALWARE TrickBot Data Collection\"; content:\"POST\"; http_method; content:\"dpost\"; http_uri; nocase; classtype:trojan-activity; sid:1000124; rev:1;)",
+    "attack_type": "trickbot",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "TrickBot",
+      "banking",
+      "trojan",
+      "dpost"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000125,
+    "description": "Detect malware using steganography loading payload from image",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET MALWARE Steganography PNG Payload\"; content:\"GET\"; http_method; content:\".png\"; http_uri; content:\"|50 4e 47|\"; http_server_body; depth:3; classtype:trojan-activity; sid:1000125; rev:1;)",
+    "attack_type": "steg_payload",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "steganography",
+      "PNG",
+      "payload",
+      "image"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000126,
+    "description": "Detect FastFlux DNS rapid IP rotation for C2 resilience",
+    "snort_rule": "alert udp any 53 -> $HOME_NET any (msg:\"ET MALWARE FastFlux DNS TTL\"; content:\"|00 00 00 00|\"; offset:8; depth:4; classtype:trojan-activity; sid:1000126; rev:1;)",
+    "attack_type": "fastflux",
+    "attack_family": "malware_c2",
+    "protocol": "udp",
+    "keywords": [
+      "FastFlux",
+      "DNS",
+      "TTL",
+      "C2 resilience"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000127,
+    "description": "Detect domain generation algorithm DGA suspicious DNS lookups",
+    "snort_rule": "alert udp $HOME_NET any -> any 53 (msg:\"ET MALWARE DGA Domain Generation\"; pcre:\"/[a-z]{12,20}\\.(ru|cn|tk|pw|cc)\u0000/i\"; classtype:trojan-activity; sid:1000127; rev:1;)",
+    "attack_type": "dga",
+    "attack_family": "malware_c2",
+    "protocol": "udp",
+    "keywords": [
+      "DGA",
+      "domain generation",
+      "algorithm",
+      "botnet"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000128,
+    "description": "Detect Windows RAT remote administration tool heartbeat",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET MALWARE RAT Heartbeat\"; content:\"|de ad be ef|\"; depth:4; threshold:type both,track by_src,count 1,seconds 60; classtype:trojan-activity; sid:1000128; rev:1;)",
+    "attack_type": "rat_heartbeat",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "RAT",
+      "heartbeat",
+      "remote administration",
+      "beacon"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000129,
+    "description": "Detect Agent Tesla spyware credential theft POST",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET MALWARE Agent Tesla Credential POST\"; content:\"POST\"; http_method; content:\"EmailFrom=\"; http_client_body; content:\"Password=\"; http_client_body; classtype:trojan-activity; sid:1000129; rev:1;)",
+    "attack_type": "agent_tesla",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "Agent Tesla",
+      "spyware",
+      "credential",
+      "POST"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000130,
+    "description": "Detect malware peer-to-peer C2 communication using custom protocol",
+    "snort_rule": "alert udp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET MALWARE P2P Custom Protocol C2\"; content:\"|ca fe ba be|\"; depth:4; classtype:trojan-activity; sid:1000130; rev:1;)",
+    "attack_type": "p2p_c2",
+    "attack_family": "malware_c2",
+    "protocol": "udp",
+    "keywords": [
+      "P2P",
+      "custom protocol",
+      "C2",
+      "magic bytes"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000131,
+    "description": "Detect LokiBot password stealer HTTP exfiltration",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET MALWARE LokiBot Exfiltration\"; content:\"POST\"; http_method; content:\"frmEml=\"; http_client_body; classtype:trojan-activity; sid:1000131; rev:1;)",
+    "attack_type": "lokibot",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "LokiBot",
+      "stealer",
+      "exfiltration",
+      "frmEml"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000132,
+    "description": "Detect remote access trojan using Tor hidden service for C2",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 9050 (msg:\"ET MALWARE Tor SOCKS C2 Communication\"; content:\"|05 01 00|\"; depth:3; classtype:trojan-activity; sid:1000132; rev:1;)",
+    "attack_type": "tor_c2",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "Tor",
+      "SOCKS",
+      "hidden service",
+      "C2"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000133,
+    "description": "Detect supply chain attack: compromised npm package phoning home",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET MALWARE NPM Package Exfil\"; content:\"POST\"; http_method; content:\"npm-package=\"; http_client_body; classtype:trojan-activity; sid:1000133; rev:1;)",
+    "attack_type": "supply_chain",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "supply chain",
+      "npm",
+      "package",
+      "exfil"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000134,
+    "description": "Detect ICMP covert channel using non-standard ICMP payload for C2",
+    "snort_rule": "alert icmp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET MALWARE ICMP Covert Channel C2\"; itype:8; dsize:>64; content:\"|DE AD|\"; depth:2; classtype:trojan-activity; sid:1000134; rev:1;)",
+    "attack_type": "icmp_covert",
+    "attack_family": "malware_c2",
+    "protocol": "icmp",
+    "keywords": [
+      "ICMP",
+      "covert channel",
+      "C2",
+      "steganography"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000135,
+    "description": "Detect malware persistence via scheduled task creation over SMB",
+    "snort_rule": "alert tcp $HOME_NET any -> $HOME_NET 445 (msg:\"ET MALWARE Scheduled Task Creation SMB\"; content:\"|ff|SMB|75|\"; depth:8; content:\"\\schtasks\"; nocase; classtype:trojan-activity; sid:1000135; rev:1;)",
+    "attack_type": "schtask_persist",
+    "attack_family": "malware_c2",
+    "protocol": "tcp",
+    "keywords": [
+      "scheduled task",
+      "persistence",
+      "SMB",
+      "schtasks"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000136,
+    "description": "Detect ARP spoofing: gratuitous ARP used for man-in-the-middle attack",
+    "snort_rule": "alert arp $HOME_NET any -> $HOME_NET any (msg:\"ET EXPLOIT ARP Spoofing MITM\"; content:\"|00 01 08 00 06 04 00 02|\"; depth:8; classtype:policy-violation; sid:1000136; rev:1;)",
+    "attack_type": "arp_spoof",
+    "attack_family": "network_exploit",
+    "protocol": "arp",
+    "keywords": [
+      "ARP",
+      "spoofing",
+      "MITM",
+      "gratuitous"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000137,
+    "description": "Detect DNS cache poisoning attempt with malformed response",
+    "snort_rule": "alert udp $EXTERNAL_NET 53 -> $HOME_NET any (msg:\"ET EXPLOIT DNS Cache Poisoning\"; pcre:\"/\u0000\u0000\u0000[\u0001-ÿ]\u0000[\u0001-ÿ]/\"; classtype:attempted-admin; sid:1000137; rev:1;)",
+    "attack_type": "dns_poison",
+    "attack_family": "network_exploit",
+    "protocol": "udp",
+    "keywords": [
+      "DNS",
+      "cache poisoning",
+      "response",
+      "spoofing"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000138,
+    "description": "Detect EternalBlue SMB exploit targeting Windows SMBv1 vulnerability",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 445 (msg:\"ET EXPLOIT EternalBlue SMBv1\"; content:\"|00 00 00 85 ff 53 4d 42|\"; depth:8; classtype:attempted-admin; sid:1000138; rev:1;)",
+    "attack_type": "eternalblue",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "EternalBlue",
+      "SMB",
+      "WannaCry",
+      "NSA"
+    ],
+    "reference": "CVE-2017-0144"
+  },
+  {
+    "id": 1000139,
+    "description": "Detect MS17-010 SMB exploitation attempt using named pipe",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 445 (msg:\"ET EXPLOIT MS17-010 Named Pipe\"; content:\"|ff|SMB|25|\"; depth:8; content:\"\\PIPE\\\"; classtype:attempted-admin; sid:1000139; rev:1;)",
+    "attack_type": "ms17_010",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "MS17-010",
+      "SMB",
+      "named pipe",
+      "exploit"
+    ],
+    "reference": "CVE-2017-0144"
+  },
+  {
+    "id": 1000140,
+    "description": "Detect BlueKeep RDP exploit attempt against Windows Remote Desktop",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 3389 (msg:\"ET EXPLOIT BlueKeep RDP\"; content:\"|03 00 00|\"; depth:3; content:\"|e0 00 00 00 00 00|\"; classtype:attempted-admin; sid:1000140; rev:1;)",
+    "attack_type": "bluekeep",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "BlueKeep",
+      "RDP",
+      "wormable",
+      "CVE-2019-0708"
+    ],
+    "reference": "CVE-2019-0708"
+  },
+  {
+    "id": 1000141,
+    "description": "Detect DROWN attack on SSLv2 enabling RSA decryption",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 443 (msg:\"ET EXPLOIT DROWN SSLv2 Attack\"; content:\"|80|\"; depth:1; content:\"|01 00 02|\"; offset:1; classtype:attempted-admin; sid:1000141; rev:1;)",
+    "attack_type": "drown",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "DROWN",
+      "SSLv2",
+      "RSA",
+      "decryption"
+    ],
+    "reference": "CVE-2016-0800"
+  },
+  {
+    "id": 1000142,
+    "description": "Detect Heartbleed OpenSSL memory disclosure exploit",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 443 (msg:\"ET EXPLOIT Heartbleed OpenSSL\"; content:\"|18 03|\"; depth:2; content:\"|00 40|\"; offset:3; classtype:attempted-admin; sid:1000142; rev:1;)",
+    "attack_type": "heartbleed",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "Heartbleed",
+      "OpenSSL",
+      "TLS",
+      "memory leak"
+    ],
+    "reference": "CVE-2014-0160"
+  },
+  {
+    "id": 1000143,
+    "description": "Detect POODLE attack downgrading TLS to SSLv3",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 443 (msg:\"ET EXPLOIT POODLE SSLv3 Downgrade\"; content:\"|16 03 00|\"; depth:3; classtype:attempted-admin; sid:1000143; rev:1;)",
+    "attack_type": "poodle",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "POODLE",
+      "SSLv3",
+      "downgrade",
+      "TLS"
+    ],
+    "reference": "CVE-2014-3566"
+  },
+  {
+    "id": 1000144,
+    "description": "Detect ProxyLogon Exchange server exploitation",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 443 (msg:\"ET EXPLOIT ProxyLogon Exchange RCE\"; content:\"POST\"; http_method; content:\"/owa/auth/\"; http_uri; content:\"X-AnonResource-Backend\"; http_header; classtype:attempted-admin; sid:1000144; rev:1;)",
+    "attack_type": "proxylogon",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "ProxyLogon",
+      "Exchange",
+      "SSRF",
+      "RCE"
+    ],
+    "reference": "CVE-2021-26855"
+  },
+  {
+    "id": 1000145,
+    "description": "Detect Zerologon attack against Windows Domain Controller Netlogon",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 445 (msg:\"ET EXPLOIT Zerologon Netlogon\"; content:\"|00 00 00 00 00 00 00 00|\"; depth:8; classtype:attempted-admin; sid:1000145; rev:1;)",
+    "attack_type": "zerologon",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "Zerologon",
+      "Netlogon",
+      "Domain Controller",
+      "Windows"
+    ],
+    "reference": "CVE-2020-1472"
+  },
+  {
+    "id": 1000146,
+    "description": "Detect PrintNightmare exploit via Windows print spooler RPC",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 445 (msg:\"ET EXPLOIT PrintNightmare Spooler RPC\"; content:\"|ff|SMB|25|\"; depth:8; content:\"\\spoolss\"; nocase; classtype:attempted-admin; sid:1000146; rev:1;)",
+    "attack_type": "printnightmare",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "PrintNightmare",
+      "spooler",
+      "RPC",
+      "SMB"
+    ],
+    "reference": "CVE-2021-34527"
+  },
+  {
+    "id": 1000147,
+    "description": "Detect SNMP walk traversal revealing device configuration",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 161 (msg:\"ET EXPLOIT SNMP Walk Traversal\"; content:\"|30|\"; depth:1; content:\"|06 01 01|\"; classtype:attempted-admin; sid:1000147; rev:1;)",
+    "attack_type": "snmp_walk",
+    "attack_family": "network_exploit",
+    "protocol": "udp",
+    "keywords": [
+      "SNMP",
+      "walk",
+      "traversal",
+      "MIB",
+      "OID"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000148,
+    "description": "Detect BGP hijacking attempt with unexpected route announcement",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 179 (msg:\"ET EXPLOIT BGP Route Hijack\"; content:\"|ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff|\"; depth:16; classtype:policy-violation; sid:1000148; rev:1;)",
+    "attack_type": "bgp_hijack",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "BGP",
+      "route hijack",
+      "AS",
+      "announcement"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000149,
+    "description": "Detect VLAN hopping attack via double tagging",
+    "snort_rule": "alert ip $HOME_NET any -> $HOME_NET any (msg:\"ET EXPLOIT VLAN Double Tagging\"; content:\"|81 00|\"; offset:12; depth:2; content:\"|81 00|\"; offset:16; depth:2; classtype:policy-violation; sid:1000149; rev:1;)",
+    "attack_type": "vlan_hop",
+    "attack_family": "network_exploit",
+    "protocol": "ip",
+    "keywords": [
+      "VLAN",
+      "hopping",
+      "double tagging",
+      "802.1Q"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000150,
+    "description": "Detect LLMNR poisoning response spoofing for credential capture",
+    "snort_rule": "alert udp $HOME_NET any -> $HOME_NET 5355 (msg:\"ET EXPLOIT LLMNR Poisoning\"; content:\"|00 00 84 00|\"; offset:2; depth:4; classtype:attempted-admin; sid:1000150; rev:1;)",
+    "attack_type": "llmnr_poison",
+    "attack_family": "network_exploit",
+    "protocol": "udp",
+    "keywords": [
+      "LLMNR",
+      "poisoning",
+      "spoofing",
+      "credential"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000151,
+    "description": "Detect NBT-NS poisoning attack for hash capture via Responder",
+    "snort_rule": "alert udp $HOME_NET any -> $HOME_NET 137 (msg:\"ET EXPLOIT NBT-NS Poisoning Responder\"; content:\"|00 00 84 00 00 01|\"; offset:2; depth:6; classtype:attempted-admin; sid:1000151; rev:1;)",
+    "attack_type": "nbtns_poison",
+    "attack_family": "network_exploit",
+    "protocol": "udp",
+    "keywords": [
+      "NBT-NS",
+      "poisoning",
+      "Responder",
+      "NTLM"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000152,
+    "description": "Detect ICMP redirect attack to reroute traffic through attacker",
+    "snort_rule": "alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET EXPLOIT ICMP Redirect Attack\"; itype:5; classtype:attempted-admin; sid:1000152; rev:1;)",
+    "attack_type": "icmp_redirect",
+    "attack_family": "network_exploit",
+    "protocol": "icmp",
+    "keywords": [
+      "ICMP",
+      "redirect",
+      "routing",
+      "MITM"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000153,
+    "description": "Detect DHCP starvation attack exhausting IP address pool",
+    "snort_rule": "alert udp $EXTERNAL_NET 68 -> 255.255.255.255 67 (msg:\"ET EXPLOIT DHCP Starvation Attack\"; content:\"|01 01 06 00|\"; depth:4; threshold:type both,track by_src,count 50,seconds 10; classtype:attempted-dos; sid:1000153; rev:1;)",
+    "attack_type": "dhcp_starve",
+    "attack_family": "network_exploit",
+    "protocol": "udp",
+    "keywords": [
+      "DHCP",
+      "starvation",
+      "IP pool",
+      "MAC spoofing"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000154,
+    "description": "Detect rogue DHCP server offering malicious gateway",
+    "snort_rule": "alert udp $HOME_NET 67 -> 255.255.255.255 68 (msg:\"ET EXPLOIT Rogue DHCP Server\"; content:\"|02 01 06 00|\"; depth:4; classtype:policy-violation; sid:1000154; rev:1;)",
+    "attack_type": "rogue_dhcp",
+    "attack_family": "network_exploit",
+    "protocol": "udp",
+    "keywords": [
+      "rogue DHCP",
+      "gateway",
+      "MITM",
+      "poisoning"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000155,
+    "description": "Detect TCP session hijacking via sequence number prediction",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET EXPLOIT TCP Session Hijacking\"; flags:PA,12; window:65535; classtype:attempted-admin; sid:1000155; rev:1;)",
+    "attack_type": "tcp_hijack",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "TCP",
+      "session hijacking",
+      "sequence number",
+      "MITM"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000156,
+    "description": "Detect MS-RPCE exploit targeting Windows RPC endpoint mapper",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 135 (msg:\"ET EXPLOIT Windows RPC EPMAPPER\"; content:\"|05 00 0b|\"; depth:3; classtype:attempted-admin; sid:1000156; rev:1;)",
+    "attack_type": "rpc_exploit",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "RPC",
+      "EPMAPPER",
+      "Windows",
+      "135"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000157,
+    "description": "Detect SSH tunneling used for port forwarding through firewall",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 22 (msg:\"ET EXPLOIT SSH Tunneling Port Forward\"; content:\"SSH-\"; depth:4; threshold:type both,track by_src,count 3,seconds 30; classtype:policy-violation; sid:1000157; rev:1;)",
+    "attack_type": "ssh_tunnel",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "SSH",
+      "tunneling",
+      "port forward",
+      "bypass"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000158,
+    "description": "Detect MSSQL buffer overflow exploit against SQL Server",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $DB_SERVERS 1433 (msg:\"ET EXPLOIT MSSQL Buffer Overflow\"; dsize:>4000; content:\"|04 01|\"; depth:2; classtype:attempted-admin; sid:1000158; rev:1;)",
+    "attack_type": "mssql_overflow",
+    "attack_family": "network_exploit",
+    "protocol": "tcp",
+    "keywords": [
+      "MSSQL",
+      "buffer overflow",
+      "SQL Server",
+      "1433"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000159,
+    "description": "Detect exploitation of UPnP SSDP for SSRF and network traversal",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> 239.255.255.250 1900 (msg:\"ET EXPLOIT UPnP SSDP Abuse\"; content:\"M-SEARCH\"; nocase; content:\"ssdp:discover\"; nocase; classtype:attempted-admin; sid:1000159; rev:1;)",
+    "attack_type": "upnp_ssrf",
+    "attack_family": "network_exploit",
+    "protocol": "udp",
+    "keywords": [
+      "UPnP",
+      "SSDP",
+      "SSRF",
+      "network traversal"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000160,
+    "description": "Detect SIP REGISTER flood to exhaust VoIP server resources",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 5060 (msg:\"ET EXPLOIT SIP REGISTER Flood\"; content:\"REGISTER sip|3A|\"; nocase; threshold:type both,track by_src,count 20,seconds 5; classtype:attempted-dos; sid:1000160; rev:1;)",
+    "attack_type": "sip_flood",
+    "attack_family": "network_exploit",
+    "protocol": "udp",
+    "keywords": [
+      "SIP",
+      "REGISTER",
+      "VoIP",
+      "flood"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000161,
+    "description": "Detect large volume FTP upload of internal data to external server",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 21 (msg:\"ET EXFIL FTP Large Upload\"; content:\"STOR \"; nocase; dsize:>10000; classtype:policy-violation; sid:1000161; rev:1;)",
+    "attack_type": "ftp_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "FTP",
+      "upload",
+      "STOR",
+      "exfiltration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000162,
+    "description": "Detect email-based data exfiltration via SMTP with large attachments",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 25 (msg:\"ET EXFIL SMTP Large Attachment\"; content:\"Content-Transfer-Encoding: base64\"; content:\"Content-Disposition: attachment\"; dsize:>50000; classtype:policy-violation; sid:1000162; rev:1;)",
+    "attack_type": "smtp_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "SMTP",
+      "attachment",
+      "base64",
+      "email exfil"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000163,
+    "description": "Detect database dump exfiltration via HTTP POST with large body",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET EXFIL DB Dump HTTP POST\"; content:\"POST\"; http_method; content:\"INSERT INTO\"; http_client_body; nocase; dsize:>10000; classtype:policy-violation; sid:1000163; rev:1;)",
+    "attack_type": "db_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "database",
+      "dump",
+      "INSERT INTO",
+      "HTTP POST"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000164,
+    "description": "Detect DNS exfiltration encoding data in subdomain queries",
+    "snort_rule": "alert udp $HOME_NET any -> any 53 (msg:\"ET EXFIL DNS Subdomain Exfiltration\"; pcre:\"/[a-f0-9]{30,}\\.[a-z]{3,}\\.(com|net|org)/i\"; classtype:policy-violation; sid:1000164; rev:1;)",
+    "attack_type": "dns_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "udp",
+    "keywords": [
+      "DNS",
+      "subdomain",
+      "hex encoding",
+      "exfiltration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000165,
+    "description": "Detect source code exfiltration: git repository contents sent externally",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET EXFIL Git Repository Exfil\"; content:\"GET\"; http_method; content:\".git/\"; http_uri; classtype:policy-violation; sid:1000165; rev:1;)",
+    "attack_type": "git_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "git",
+      "source code",
+      "repository",
+      "exfiltration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000166,
+    "description": "Detect PII exfiltration: credit card patterns in HTTP traffic",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET EXFIL Credit Card PII\"; pcre:\"/\b4[0-9]{12}(?:[0-9]{3})?\b/\"; classtype:policy-violation; sid:1000166; rev:1;)",
+    "attack_type": "pii_cc",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "PII",
+      "credit card",
+      "Visa",
+      "exfiltration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000167,
+    "description": "Detect ICMP-based covert channel exfiltrating data in ping payload",
+    "snort_rule": "alert icmp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET EXFIL ICMP Data Exfiltration\"; itype:8; dsize:>100; classtype:policy-violation; sid:1000167; rev:1;)",
+    "attack_type": "icmp_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "icmp",
+    "keywords": [
+      "ICMP",
+      "covert channel",
+      "ping",
+      "payload"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000168,
+    "description": "Detect corporate document exfiltration via cloud storage upload",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 443 (msg:\"ET EXFIL Cloud Storage Upload\"; content:\"PUT\"; http_method; pcre:\"/\\.(docx|xlsx|pdf|zip)\b/Ui\"; http_uri; dsize:>50000; classtype:policy-violation; sid:1000168; rev:1;)",
+    "attack_type": "cloud_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "cloud storage",
+      "PUT",
+      "docx",
+      "pdf",
+      "upload"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000169,
+    "description": "Detect password hash dump exfiltration over HTTP",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET EXFIL NTLM Hash Exfiltration\"; content:\"POST\"; http_method; pcre:\"/[a-f0-9]{32}:[a-f0-9]{32}/\"; http_client_body; classtype:policy-violation; sid:1000169; rev:1;)",
+    "attack_type": "hash_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "NTLM",
+      "hash",
+      "dump",
+      "exfiltration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000170,
+    "description": "Detect SSL certificate used for data exfiltration with anomalous SNI",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 443 (msg:\"ET EXFIL TLS SNI Exfiltration\"; pcre:\"/[a-f0-9]{20,}\\.[a-z]{2,}\\.(com|net)/i\"; tls.sni; classtype:policy-violation; sid:1000170; rev:1;)",
+    "attack_type": "tls_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "TLS",
+      "SNI",
+      "certificate",
+      "exfiltration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000171,
+    "description": "Detect Windows clipboard data sent to remote server via RDP channel",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 3389 (msg:\"ET EXFIL RDP Clipboard Exfil\"; content:\"|03 00|\"; depth:2; dsize:>5000; classtype:policy-violation; sid:1000171; rev:1;)",
+    "attack_type": "rdp_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "RDP",
+      "clipboard",
+      "channel",
+      "exfiltration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000172,
+    "description": "Detect TFTP-based exfiltration of configuration files",
+    "snort_rule": "alert udp $HOME_NET any -> $EXTERNAL_NET 69 (msg:\"ET EXFIL TFTP Config Exfil\"; content:\"|00 02|\"; depth:2; classtype:policy-violation; sid:1000172; rev:1;)",
+    "attack_type": "tftp_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "udp",
+    "keywords": [
+      "TFTP",
+      "config",
+      "exfiltration",
+      "69"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000173,
+    "description": "Detect API key and secret exfiltration in HTTP request body",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET EXFIL API Credentials Exfil\"; content:\"POST\"; http_method; pcre:\"/api[_-]?(key|secret|token)\\s*[=:]\\s*[a-zA-Z0-9]{20,}/i\"; http_client_body; classtype:policy-violation; sid:1000173; rev:1;)",
+    "attack_type": "api_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "API",
+      "key",
+      "secret",
+      "token",
+      "exfiltration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000174,
+    "description": "Detect private key file SSH RSA exfiltration via HTTP",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET EXFIL Private Key Exfiltration\"; content:\"BEGIN RSA PRIVATE KEY\"; classtype:policy-violation; sid:1000174; rev:1;)",
+    "attack_type": "privkey_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "RSA",
+      "private key",
+      "SSH",
+      "certificate exfil"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000175,
+    "description": "Detect bulk email address exfiltration from internal mail server",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET EXFIL Email List Exfiltration\"; content:\"POST\"; http_method; pcre:\"/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,},){5,}/\"; http_client_body; classtype:policy-violation; sid:1000175; rev:1;)",
+    "attack_type": "email_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "email",
+      "list",
+      "bulk",
+      "PII"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000176,
+    "description": "Detect internal IP mapping exfiltration via HTTP",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET EXFIL Internal Network Map\"; content:\"POST\"; http_method; pcre:\"/192\\.168\\.\\d{1,3}\\.\\d{1,3}/\"; http_client_body; classtype:policy-violation; sid:1000176; rev:1;)",
+    "attack_type": "network_map_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "network map",
+      "internal IP",
+      "192.168",
+      "reconnaissance"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000177,
+    "description": "Detect social security number SSN pattern in outbound HTTP traffic",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET EXFIL SSN PII Exfiltration\"; pcre:\"/\b\\d{3}-\\d{2}-\\d{4}\b/\"; classtype:policy-violation; sid:1000177; rev:1;)",
+    "attack_type": "ssn_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "SSN",
+      "PII",
+      "social security",
+      "exfiltration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000178,
+    "description": "Detect AWS S3 bucket data exfiltration via presigned URL",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 443 (msg:\"ET EXFIL AWS S3 Presigned URL\"; content:\"X-Amz-Signature\"; http_uri; content:\"PUT\"; http_method; classtype:policy-violation; sid:1000178; rev:1;)",
+    "attack_type": "s3_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "AWS",
+      "S3",
+      "presigned URL",
+      "exfiltration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000179,
+    "description": "Detect proprietary binary protocol exfiltrating internal database content",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET EXFIL Custom Binary Protocol DB\"; content:\"|DEADBEEF|\"; depth:4; dsize:>1000; classtype:policy-violation; sid:1000179; rev:1;)",
+    "attack_type": "binary_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "binary",
+      "custom protocol",
+      "database",
+      "DEADBEEF"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000180,
+    "description": "Detect Pastebin upload used to exfiltrate internal data",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET EXFIL Pastebin Upload Exfil\"; content:\"POST\"; http_method; content:\"pastebin.com\"; http_host; content:\"api_paste_code=\"; http_client_body; classtype:policy-violation; sid:1000180; rev:1;)",
+    "attack_type": "pastebin_exfil",
+    "attack_family": "data_exfiltration",
+    "protocol": "tcp",
+    "keywords": [
+      "Pastebin",
+      "upload",
+      "exfiltration",
+      "API"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000181,
+    "description": "Detect NETBIOS Name Service spoofing attack on local network",
+    "snort_rule": "alert udp $HOME_NET 137 -> $HOME_NET 137 (msg:\"ET INTRUSION NETBIOS NS Spoofing\"; content:\"|00 00 84 00 00 01 00 01|\"; offset:2; depth:8; classtype:policy-violation; sid:1000181; rev:1;)",
+    "attack_type": "netbios_spoof",
+    "attack_family": "intrusion",
+    "protocol": "udp",
+    "keywords": [
+      "NETBIOS",
+      "NS",
+      "spoofing",
+      "LAN"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000182,
+    "description": "Detect suspicious PowerShell download cradle for staged payload",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET $HTTP_PORTS (msg:\"ET INTRUSION PowerShell Download Cradle\"; content:\"GET\"; http_method; content:\"powershell\"; http_user_agent; nocase; classtype:trojan-activity; sid:1000182; rev:1;)",
+    "attack_type": "ps_download",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "PowerShell",
+      "download",
+      "cradle",
+      "IEX"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000183,
+    "description": "Detect WMI remote code execution over network for lateral movement",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 135 (msg:\"ET INTRUSION WMI Remote Execution\"; content:\"|05 00 0b 03|\"; depth:4; classtype:attempted-admin; sid:1000183; rev:1;)",
+    "attack_type": "wmi_exec",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "WMI",
+      "remote execution",
+      "lateral movement",
+      "135"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000184,
+    "description": "Detect PsExec remote command execution tool used for lateral movement",
+    "snort_rule": "alert tcp $HOME_NET any -> $HOME_NET 445 (msg:\"ET INTRUSION PsExec Lateral Movement\"; content:\"|ff|SMB|75|\"; depth:8; content:\"PSEXESVC\"; nocase; classtype:attempted-admin; sid:1000184; rev:1;)",
+    "attack_type": "psexec",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "PsExec",
+      "lateral movement",
+      "SMB",
+      "PSEXESVC"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000185,
+    "description": "Detect Pass-the-Hash attack using NTLM authentication with stolen hash",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 445 (msg:\"ET INTRUSION Pass-the-Hash NTLM\"; content:\"|ff|SMB|73|\"; depth:8; content:\"NTLMSSP|00|\"; classtype:attempted-admin; sid:1000185; rev:1;)",
+    "attack_type": "pass_hash",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "Pass-the-Hash",
+      "NTLM",
+      "lateral movement",
+      "SMB"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000186,
+    "description": "Detect Kerberoasting attack requesting service tickets for offline cracking",
+    "snort_rule": "alert tcp $HOME_NET any -> $HOME_NET 88 (msg:\"ET INTRUSION Kerberoasting Attack\"; content:\"|6b|\"; depth:1; classtype:attempted-admin; sid:1000186; rev:1;)",
+    "attack_type": "kerberoast",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "Kerberoasting",
+      "Kerberos",
+      "TGS",
+      "88"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000187,
+    "description": "Detect Golden Ticket attack using forged Kerberos TGT",
+    "snort_rule": "alert tcp $HOME_NET any -> $HOME_NET 88 (msg:\"ET INTRUSION Kerberos Golden Ticket\"; content:\"|76|\"; depth:1; content:\"|a0 07 03 05 00|\"; classtype:attempted-admin; sid:1000187; rev:1;)",
+    "attack_type": "golden_ticket",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "Golden Ticket",
+      "Kerberos",
+      "TGT",
+      "Domain Admin"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000188,
+    "description": "Detect DCSync attack replicating AD credentials over DRSUAPI",
+    "snort_rule": "alert tcp $HOME_NET any -> $HOME_NET 135 (msg:\"ET INTRUSION DCSync DRSUAPI\"; content:\"|05 00 0b|\"; depth:3; content:\"|e3 51 4b 20|\"; classtype:attempted-admin; sid:1000188; rev:1;)",
+    "attack_type": "dcsync",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "DCSync",
+      "DRSUAPI",
+      "Active Directory",
+      "credential dump"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000189,
+    "description": "Detect mimikatz credential dumping tool network activity",
+    "snort_rule": "alert tcp $HOME_NET any -> $HOME_NET 445 (msg:\"ET INTRUSION Mimikatz Credential Dump\"; content:\"|ff|SMB|a5|\"; depth:8; content:\"sekurlsa\"; nocase; classtype:attempted-admin; sid:1000189; rev:1;)",
+    "attack_type": "mimikatz",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "mimikatz",
+      "credential dump",
+      "LSASS",
+      "sekurlsa"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000190,
+    "description": "Detect LDAP query dumping all AD user accounts for enumeration",
+    "snort_rule": "alert tcp $HOME_NET any -> $HOME_NET 389 (msg:\"ET INTRUSION AD User Enumeration LDAP\"; content:\"|60|\"; depth:1; content:\"sAMAccountName\"; classtype:attempted-recon; sid:1000190; rev:1;)",
+    "attack_type": "ad_enum",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "LDAP",
+      "Active Directory",
+      "user enumeration",
+      "sAMAccountName"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000191,
+    "description": "Detect unauthorized access to admin share C$ via SMB",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 445 (msg:\"ET INTRUSION SMB Admin Share Access\"; content:\"|ff|SMB|75|\"; depth:8; content:\"\\C$\"; nocase; classtype:attempted-admin; sid:1000191; rev:1;)",
+    "attack_type": "admin_share",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "SMB",
+      "admin share",
+      "C$",
+      "lateral movement"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000192,
+    "description": "Detect cleartext telnet credentials transmitted on network",
+    "snort_rule": "alert tcp $HOME_NET any -> any 23 (msg:\"ET INTRUSION Telnet Cleartext Password\"; content:\"Password:\"; nocase; classtype:policy-violation; sid:1000192; rev:1;)",
+    "attack_type": "telnet_cleartext",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "Telnet",
+      "cleartext",
+      "password",
+      "23"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000193,
+    "description": "Detect rogue access point beacon advertising corporate SSID",
+    "snort_rule": "alert udp $HOME_NET any -> any 0 (msg:\"ET INTRUSION Rogue AP SSID Beacon\"; content:\"Corporate-WiFi\"; nocase; classtype:policy-violation; sid:1000193; rev:1;)",
+    "attack_type": "rogue_ap",
+    "attack_family": "intrusion",
+    "protocol": "udp",
+    "keywords": [
+      "rogue AP",
+      "SSID",
+      "Wi-Fi",
+      "evil twin"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000194,
+    "description": "Detect unusual outbound connection from database server",
+    "snort_rule": "alert tcp $DB_SERVERS any -> $EXTERNAL_NET any (msg:\"ET INTRUSION DB Server Outbound\"; flags:S,12; classtype:policy-violation; sid:1000194; rev:1;)",
+    "attack_type": "db_outbound",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "database",
+      "outbound",
+      "unusual",
+      "egress"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000195,
+    "description": "Detect network reconnaissance using traceroute TTL manipulation",
+    "snort_rule": "alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET INTRUSION Traceroute TTL Exceeded\"; itype:11; icode:0; classtype:attempted-recon; sid:1000195; rev:1;)",
+    "attack_type": "traceroute",
+    "attack_family": "intrusion",
+    "protocol": "icmp",
+    "keywords": [
+      "traceroute",
+      "TTL",
+      "ICMP",
+      "reconnaissance"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000196,
+    "description": "Detect exploitation of SNMP write community string for config change",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 161 (msg:\"ET INTRUSION SNMP Write Exploit\"; content:\"|a3|\"; depth:1; classtype:attempted-admin; sid:1000196; rev:1;)",
+    "attack_type": "snmp_write",
+    "attack_family": "intrusion",
+    "protocol": "udp",
+    "keywords": [
+      "SNMP",
+      "write",
+      "community",
+      "configuration"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000197,
+    "description": "Detect TFTP directory traversal to read system files",
+    "snort_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 69 (msg:\"ET INTRUSION TFTP Directory Traversal\"; content:\"|00 01|\"; depth:2; content:\"..\"; classtype:attempted-admin; sid:1000197; rev:1;)",
+    "attack_type": "tftp_traversal",
+    "attack_family": "intrusion",
+    "protocol": "udp",
+    "keywords": [
+      "TFTP",
+      "directory traversal",
+      "69",
+      "file read"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000198,
+    "description": "Detect HTTP proxy CONNECT used for unauthorized tunneling",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET INTRUSION HTTP CONNECT Tunnel\"; content:\"CONNECT \"; depth:8; content:\" HTTP/1\"; classtype:policy-violation; sid:1000198; rev:1;)",
+    "attack_type": "http_tunnel",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "CONNECT",
+      "HTTP",
+      "tunnel",
+      "proxy"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000199,
+    "description": "Detect exploitation of default credentials on network device",
+    "snort_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 23 (msg:\"ET INTRUSION Default Credential Login\"; content:\"admin\"; nocase; content:\"admin\"; nocase; distance:0; classtype:attempted-admin; sid:1000199; rev:1;)",
+    "attack_type": "default_creds",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "default credentials",
+      "admin",
+      "Telnet",
+      "router"
+    ],
+    "reference": ""
+  },
+  {
+    "id": 1000200,
+    "description": "Detect unauthorized port forwarding via SSH from internal host",
+    "snort_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 22 (msg:\"ET INTRUSION SSH Reverse Port Forward\"; content:\"SSH-\"; depth:4; pcre:\"/SSH-2\\.0-(OpenSSH|PuTTY)/\"; classtype:policy-violation; sid:1000200; rev:1;)",
+    "attack_type": "ssh_reverse_fwd",
+    "attack_family": "intrusion",
+    "protocol": "tcp",
+    "keywords": [
+      "SSH",
+      "reverse",
+      "port forward",
+      "tunnel"
+    ],
+    "reference": ""
+  }
+]

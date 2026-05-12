@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+
+# Virtualenvs
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Secrets
+.env
+.env.local
+*.key
+*.pem
+
+# Gradio
+.gradio/
+flagged/
+
+# HuggingFace / Torch caches (in case anyone runs from this folder)
+.cache/
+~/.cache/huggingface/
+
+# Large model artefacts (regenerable)
+*.bin
+*.safetensors
+
+# Claude Code
+.claude/
+
+# Misc
+*.log
+.coverage

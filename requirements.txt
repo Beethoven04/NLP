@@ -1,0 +1,59 @@
+# ============================================
+# UNIFIED REQUIREMENTS FOR ALL DEVOIRS (0-3)
+# ============================================
+# This file ensures all 4 devoirs can run without conflicts.
+# Generated from comprehensive import analysis of all notebooks and scripts.
+
+# ---- Core Data & ML ----
+numpy>=1.26.0
+pandas>=2.1.0
+scikit-learn>=1.4.0
+
+# ---- NLP & Text Processing ----
+nltk>=3.8.0
+unicodedata2>=15.0.0
+
+# ---- Embeddings & Vector Search ----
+sentence-transformers>=2.7.0
+faiss-cpu>=1.7.4
+transformers>=4.40.0
+
+# ---- Retrieval & Ranking ----
+rank-bm25>=0.2.2
+
+# ---- Large Language Models ----
+torch>=2.2.0
+# Apple Silicon LLM (optional, for M-series Macs)
+mlx>=0.16.0
+mlx-lm>=0.15.0
+
+# ---- PDF Processing ----
+PyPDF2>=3.0.0
+pdfplumber>=0.10.0
+
+# ---- External APIs ----
+groq>=0.9.0
+huggingface-hub>=0.23.0
+
+# ---- Evaluation Metrics ----
+rouge-score>=0.1.2
+bert-score>=0.3.13
+
+# ---- Visualization & UI ----
+matplotlib>=3.8.0
+networkx>=3.2.0
+gradio>=4.36.0
+
+# ---- Utilities ----
+tqdm>=4.66.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# ---- Optional: NER & Advanced NLP ----
+# Uncomment if you need spaCy models
+# spacy>=3.7.0
+
+# ---- IPython (for notebooks) ----
+ipython>=8.16.0
+jupyter>=1.0.0
+jupyterlab>=4.0.0

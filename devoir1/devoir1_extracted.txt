@@ -1,0 +1,54 @@
+Université Abdelmalek Essaadi  
+Faculté des sciences et techniques de Tanger  
+Département Génie Informatique  
+Master IASD  2026  Pr. I. BENABDELOUAHAB  
+Devoir 1. Pipeline NLP pour la structuration  
+du Code de la Route  
+ 
+1. Objectif NLP  
+L'enjeu est de passer d'un bloc de texte arabe brut à une ligne CSV où chaque colonne représente 
+une entité juridique précise. Vous devez concevoir un moteur de parsing capable de comprendre 
+la structure sémantique d'un article de loi.  
+ 
+2. Questions  
+1. Normalisation :  traiter la Hamza, la Ta Marbuta  et supprimer les Tashkeel  (voyelles) pour 
+que le moteur de recherche ne soit pas biaisé .. 
+2. Segmentation (Tokenization) :  découper le texte pour isoler l'énoncé de l'infraction de sa 
+sanction associée .. 
+3. Extraction d'Entités (NER) :  motifs (Patterns) permettent de distinguer un numéro 
+d'article (  مادة )d'un montant d'amende ( درهم ).. 
+4. Analyse de Sentiment/Rôle :  classifier automatiquement un paragraphe comme étant 
+une "définition", une "obligation" ou une "sanction" (optionnel ) 
+ 
+3. Schéma de sortie (Colonnes du CSV)  
+Le fichier code_route.csv devra contenir les colonnes suivantes, extraites par votre modèle :  
+• article_id  : Le numéro de l'article (ex: "184").  
+• infraction_desc  : Description textuelle nettoyée de la faute.  
+• categorie_vehicule  : Type de véhicule concerné (Poids lourd, léger, moto).  
+• amende_fixe  : Valeur numérique de l'amende.  
+• points_retrait  : Nombre entier de points perdus.  
+• mots_cles  : Liste de tags extraits (ex: "vitesse", "nuit", "autoroute").  
+• Ajouter plus de colonnes significatifs en relation avec le PDF fournie . 
+ 
+4. Le flux de traitement  
+Étape A : Prétraitement Arabe  
+• Utilisation de PyArabic pour le nettoyage , ou autre.  
+• Gestion d u bidirectionnel pour s'assurer que les chiffres ne s'inversent pas avec le texte.  
+Étape B : Extraction par Patterns (Rules -based NLP)  
+Comme le langage juridique est très codifié, l'utilisation de Regex Unicode  est prioritaire :  
+• Pattern Amende :  (\d+)\s+(درهم|dirhams)  
+• Pattern Points :  خصم\s+(\d+)\s+ نقط 
+• Ajouter plus de patterns trouvé dans le document  
+Étape C : Vectorisation et Classification (ML)  
+• Utiliser TF-IDF ou des Word Embeddings  (type AraBERT) pour regrouper les infractions 
+similaires (ex: tout ce qui concerne le "stationnement"  par exemple, par catégorie ). 
+ 
+À faire :  
+❑ Produisez un script Python qui prend le texte brut en entrée et génère un fichier 
+export_final.csv  parfaitement aligné, où chaque ligne correspond à une règle du code de 
+la route.  
+❑ Utilisez deux approches  : une approche par règles (Regex) et un modèle pré -entraîné 
+(spaCy/BERT) . 
+ 
+Pour les non -arabophones  : vous trouverez aussi la version Française  du code de la route Marocain . 
+Sources des données  : https://www.sgg.gov.ma/BulletinOfficiel.aspx  

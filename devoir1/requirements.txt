@@ -1,0 +1,26 @@
+# ========================================
+# DEVOIR 1 - Legal Document NLP Pipeline
+# ========================================
+# Requirements for PDF extraction, article segmentation, entity extraction, and clustering.
+
+# Core utilities
+pandas>=2.1.0
+numpy>=1.26.0
+
+# PDF Processing
+PyPDF2>=3.0.0
+
+# Text Processing & Normalization
+nltk>=3.8.0
+unicodedata2>=15.0.0
+
+# Machine Learning & Vectorization
+scikit-learn>=1.4.0
+
+# Optional: NER (spaCy)
+# Uncomment if needed for named entity recognition
+# spacy>=3.7.0
+
+# IPython support
+ipython>=8.16.0
+jupyter>=1.0.0
