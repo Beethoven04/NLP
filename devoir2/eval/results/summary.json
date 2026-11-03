@@ -1,0 +1,23 @@
+{
+  "qwen3.8-27b": {
+    "n_answers": 66,
+    "answer_accuracy": 0.879,
+    "n_judged": 66,
+    "facts_match": 0.909,
+    "cites_gold_article": 0.924,
+    "avg_generation_s": 18.0
+  },
+  "allam-2-7b": {
+    "n_answers": 8,
+    "answer_accuracy": null,
+    "n_judged": 0,
+    "facts_match": 0.5,
+    "cites_gold_article": 0.125,
+    "avg_generation_s": 19.32
+  },
+  "_retrieval": {
+    "hit@5": 0.92,
+    "ood_refusal_rate": 1.0,
+    "false_refusals": []
+  }
+}

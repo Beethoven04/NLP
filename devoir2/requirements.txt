@@ -1,38 +1,21 @@
-# ========================================
-# DEVOIR 2 - RAG (Retrieval-Augmented Generation) System
-# ========================================
-# Requirements for embedding models, vector search, and LLM integration.
+# Devoir 2 — RAG over the Moroccan Code de la Route (law 52.05)
+# Python 3.10+ (tested 3.11, macOS Apple Silicon)
 
-# Core utilities
-pandas>=2.1.0
-numpy>=1.26.0
+# PDF extraction (glyph-level, fixes Arabic ligatures / bidi numbers / tables)
+pymupdf>=1.24
 
-# Text Processing
-nltk>=3.8.0
-unicodedata2>=15.0.0
+# Retrieval
+numpy>=1.26
+rank-bm25>=0.2.2
+sentence-transformers>=3.0     # BAAI/bge-m3 embeddings + BAAI/bge-reranker-v2-m3 cross-encoder
+torch>=2.2
+transformers>=4.40
+huggingface-hub>=0.23
 
-# Embeddings & Vector Search
-sentence-transformers>=2.7.0
-faiss-cpu>=1.7.4
-transformers>=4.40.0
+# Generation
+groq>=0.9                      # cloud LLMs (gpt-oss-120b, qwen3, allam)
+mlx-lm>=0.15 ; sys_platform == "darwin" and platform_machine == "arm64"   # local LLM (Qwen2.5-7B)
 
-# Large Language Models & External APIs
-torch>=2.2.0
-groq>=0.9.0
-huggingface-hub>=0.23.0
-
-# Machine Learning
-scikit-learn>=1.4.0
-
-# UI & Visualization
-gradio>=4.36.0
-matplotlib>=3.8.0
-
-# Utilities
-tqdm>=4.66.0
-requests>=2.31.0
-python-dotenv>=1.0.0
-
-# IPython support
-ipython>=8.16.0
-jupyter>=1.0.0
+# App / config
+gradio>=4.36
+python-dotenv>=1.0

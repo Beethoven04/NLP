@@ -48,3 +48,6 @@ flagged/
 # Misc
 *.log
 .coverage
+
+# RAG embedding cache (rebuilt automatically)
+devoir2/data/cache/
